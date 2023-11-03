@@ -5,9 +5,13 @@ on:
     branches: 
       - master
 
+permissions:
+  contents: write
+  pull-requests: write 
+
 env:
   # do NOT replace ${{secrets.GITHUB_TOKEN}}, GitHub will take care of it
-  MY_REPO: https://Piotr-Glab495:${{secrets.GITHUB_TOKEN}}@github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
+  MY_REPO: https://Piotr-Glab495:${{ secrets.GITHUB_TOKEN }}@github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
   MY_BRANCH: development
   MASTER_REPO: https://github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
   MASTER_BRANCH: master
@@ -19,10 +23,10 @@ jobs:
     steps:
     - name: Merge with master
       run: |
-        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH}} tmp
+        git clone ${{ env.MY_REPO }} -b ${{ env.MY_BRANCH }} tmp
         cd tmp
         git config user.name "Automerge Bot"
         git config user.email "bot@example.com"
         git config pull.rebase false
-        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH}}
+        git pull ${{ env.MASTER_REPO }} ${{env.MASTER_BRANCH}}
         git push
