@@ -8,7 +8,6 @@ on:
 env:
   MY_REPO: https://Piotr-Glab495:${{ secrets.UGV_PAT }}@github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
   MY_BRANCH: development
-  #MASTER_REPO: https://github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
   MASTER_BRANCH: master
 
 jobs:
@@ -18,11 +17,11 @@ jobs:
     steps:
     - name: Merge with master
       run: |
-        git config --global url.https://${{ secrets.UGV_PAT }}@github.com/.insteadOf https://github.com/
+        git config url.https://${{ secrets.UGV_PAT }}@github.com/.insteadOf https://github.com/
         git clone ${{ env.MY_REPO }} -b ${{ env.MY_BRANCH }} tmp
         cd tmp
         git config user.name "Automerge Bot"
-        git config user.email "piotgla495@student.polsl.pl"
+        git config user.email "automergeBot@example.com"
         git config pull.rebase false
         git pull ${{ env.MY_REPO }} ${{env.MASTER_BRANCH}}
         git push
