@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: Merge with master
       run: |
-        git config url.https://${{ secrets.UGV_PAT }}@github.com/.insteadOf https://github.com/
+        git config --global url.https://${{ secrets.UGV_PAT }}@github.com/.insteadOf https://github.com/
         git clone ${{ env.MY_REPO }} -b ${{ env.MY_BRANCH }} tmp
         cd tmp
         git config user.name "Automerge Bot"
