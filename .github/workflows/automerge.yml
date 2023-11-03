@@ -11,8 +11,7 @@ permissions:
 
 env:
   # do NOT replace ${{secrets.GITHUB_TOKEN}}, GitHub will take care of it {username}/{repo}.git
-  #MY_REPO: https://Piotr-Glab495:${{ secrets.GITHUB_TOKEN }}@github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
-  MY_REPO: git@github.com:Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
+  MY_REPO: Piotr-Glab495:${{ secrets.GITHUB_TOKEN }}@github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
   MY_BRANCH: development
   MASTER_REPO: https://github.com/Piotr-Glab495/UWB-Geolocalisation-Visualizer.git
   MASTER_BRANCH: master
