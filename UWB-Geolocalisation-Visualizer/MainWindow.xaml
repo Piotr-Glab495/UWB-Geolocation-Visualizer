@@ -3,10 +3,59 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UWB_Geolocalisation_Visualizer"
+        xmlns:viewModel="clr-namespace:UWB_Geolocalisation_Visualizer.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Height="675" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        x:Name="WholeWindow">
 
-    </Grid>
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <Border
+        Background="#272537"
+        CornerRadius="20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock  
+                Text="{Binding DisplayName}"
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Foreground="White" 
+                FontSize="26"
+                Margin="20,0,0,0" />
+
+            <StackPanel Grid.Row="1">
+                <ItemsControl
+                    x:Name="CommandsControl"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    ItemsSource="{Binding Commands, UpdateSourceTrigger=PropertyChanged}"
+                    ItemTemplate="{StaticResource CommandsTemplate}"
+                    />
+            </StackPanel>
+
+            <ContentControl
+                x:Name="ViewControl"
+                Grid.Row="1"
+                Grid.Column="1" 
+                Content="{Binding CurrentView}" />
+            
+        </Grid>
+    </Border>
 </Window>
