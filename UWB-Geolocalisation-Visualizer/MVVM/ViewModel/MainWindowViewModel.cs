@@ -19,12 +19,20 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
 
         /**
          *<summary>
+         * The ObservableProperty for a ViewModel servicing a dialog used for adding the new anchor
+         *</summary>
+         */
+        [ObservableProperty]
+        private AnchorViewModel anchorViewModel;
+
+        /**
+         *<summary>
          * The ObservableProperty for a ViewModel servicing a currentlly displayed view.
          * It will be switched to other ViewModels if some new views would be added
          *</summary>
          */
         [ObservableProperty]
-        private object _currentView;
+        private object currentView;
 
         /**
          *<summary>
@@ -36,21 +44,20 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
 
         public MainWindowViewModel() : base(displayName: "UWB Geolocalisation Visualizer")
         {
-            this.localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
+            localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
+            anchorViewModel = new AnchorViewModel(displayName: "Podaj położenie kotwicy");
             CurrentView = localizerViewModel;
             this.Commands = new ObservableCollection<CommandViewModel>
             {
                 new CommandViewModel(
                         displayName: "Dodaj kotwicę",
-                        command: new RelayCommand(delegate { }) //TODO: change the empty delegate to an appropriate command adding an anhor
+                        command: new ToggleAnchorDialogVisibilityCommand(anchorViewModel)
                     ),
                 new CommandViewModel(
                         displayName: "Zakończ",
-                        command: new CloseCommand()
+                        command: new CloseCommand( () => { System.Windows.Application.Current.Shutdown(); } )
                     )
             };
-            //Setting the CloseCommand.RequestClose effect - that is giving it the opportunity to close the application.
-            (this.Commands[1].Command as CloseCommand)!.RequestClose += delegate { System.Windows.Application.Current.Shutdown(); };
         }
     }
 }

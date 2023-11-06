@@ -38,9 +38,10 @@
                 HorizontalAlignment="Left"
                 Foreground="White" 
                 FontSize="26"
-                Margin="20,0,0,0" />
+                Margin="20,0,0,0" 
+                Panel.ZIndex="1"/>
 
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Panel.ZIndex="1">
                 <ItemsControl
                     x:Name="CommandsControl"
                     Grid.Row="2"
@@ -51,11 +52,27 @@
             </StackPanel>
 
             <ContentControl
-                x:Name="ViewControl"
+                x:Name="LocalizerViewControl"
                 Grid.Row="1"
                 Grid.Column="1" 
-                Content="{Binding CurrentView}" />
+                Content="{Binding CurrentView}" 
+                Panel.ZIndex="1"
+            />
             
+            <ContentControl
+                x:Name="AnchorViewControl"
+                Grid.Row="0"
+                Margin="0, 20, 0, 0"
+                Grid.RowSpan="2"
+                Grid.Column="1" 
+                Content="{Binding AnchorViewModel}"
+                Height="150"
+                Width="250"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Panel.ZIndex="{Binding AnchorViewModel.AnchorZIndex}"
+            />
+
         </Grid>
     </Border>
 </Window>
