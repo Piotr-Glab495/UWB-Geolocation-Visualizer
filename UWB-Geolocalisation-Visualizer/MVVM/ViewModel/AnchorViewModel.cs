@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using UWB_Geolocalisation_Visualizer.Core;
+using UWB_Geolocalisation_Visualizer.MVVM.ViewModel.Commands;
+using UWB_Geolocalisation_Visualizer.MVVM.ViewModel.Commands.AnchorView;
+using UWB_Geolocalisation_Visualizer.MVVM.ViewModel.Enums;
 
 namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
 {
@@ -9,7 +12,7 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
         private string visibility = "Collapsed";
 
         [ObservableProperty]
-        private int anchorZIndex = 1000;
+        private string locationVisibility = "Collapsed";
 
         [ObservableProperty]
         private CoordinateViewModel xCoordinateViewModel;
@@ -17,10 +20,21 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private CoordinateViewModel yCoordinateViewModel;
 
-        public AnchorViewModel(string displayName) : base(displayName)
+        [ObservableProperty]
+        private AnchorDialogTailViewModel anchorDialogTailViewModel;
+
+        [ObservableProperty]
+        private CommandViewModel addAnchorCommandViewModel;
+
+        public AnchorViewModel(string displayName, TailSitesEnum tailDialogSite = TailSitesEnum.Left) : base(displayName)
         {
             xCoordinateViewModel = new CoordinateViewModel(displayName: "X:");
             yCoordinateViewModel = new CoordinateViewModel(displayName: "Y:");
+            anchorDialogTailViewModel = new AnchorDialogTailViewModel(displayName: "AddingAnchor", tailDialogSite);
+            addAnchorCommandViewModel = new CommandViewModel(
+                    displayName: "AddingAnchor",
+                    command: new AddAnchorCommand()
+                );
         }
     }
 }

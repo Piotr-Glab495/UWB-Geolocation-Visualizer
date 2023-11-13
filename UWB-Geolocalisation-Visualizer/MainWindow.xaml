@@ -70,7 +70,7 @@
                 Width="250"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Panel.ZIndex="{Binding AnchorViewModel.AnchorZIndex}"
+                Panel.ZIndex="1000"
             />
 
         </Grid>

@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using UWB_Geolocalisation_Visualizer.Core;
 using UWB_Geolocalisation_Visualizer.MVVM.ViewModel.Commands;

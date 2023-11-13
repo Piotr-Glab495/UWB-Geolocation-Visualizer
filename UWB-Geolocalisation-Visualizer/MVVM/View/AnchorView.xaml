@@ -16,20 +16,28 @@
         Background="#3d8693"
         >
         <Grid>
-            <Polygon 
-                Points="-20, 15 15, 0 15, 30" 
-                Fill="#3d8693" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Center" 
-            />
+            <Canvas>
+                <Polygon 
+                    Points="{Binding AnchorDialogTailViewModel.Points}" 
+                    Fill="#3d8693" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                />
 
-            <Ellipse
-               
-    Fill="#3d8693" 
-    HorizontalAlignment="Left" 
-    VerticalAlignment="Center" 
-/>
-
+                <Ellipse
+                    Width="15" 
+                    Height="15"
+                    Fill="#096272" 
+                    Stroke="White"
+                    StrokeThickness="1" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding LocationVisibility}"
+                    Canvas.Left="{Binding AnchorDialogTailViewModel.Left}"
+                    Canvas.Bottom="{Binding AnchorDialogTailViewModel.Bottom}"
+                />
+            </Canvas>
+            
             <StackPanel 
                 Margin="10"
                 Orientation="Vertical"
@@ -82,7 +90,7 @@
                         Cursor="Hand"
                         Background="#096272"
                         Foreground="White"
-                        Command="{Binding FilterRecipesICommand}"/>
+                        Command="{Binding AddAnchorCommandViewModel.Command}"/>
 
                 </Grid>
             </StackPanel>
