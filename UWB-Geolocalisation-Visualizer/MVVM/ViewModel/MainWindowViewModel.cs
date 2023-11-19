@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using UWB_Geolocalisation_Visualizer.Core;
 using UWB_Geolocalisation_Visualizer.MVVM.ViewModel.Commands;
@@ -19,12 +18,20 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
 
         /**
          *<summary>
+         * The ObservableProperty for a ViewModel servicing a dialog used for adding the new anchor
+         *</summary>
+         */
+        [ObservableProperty]
+        private AnchorViewModel anchorViewModel;
+
+        /**
+         *<summary>
          * The ObservableProperty for a ViewModel servicing a currentlly displayed view.
          * It will be switched to other ViewModels if some new views would be added
          *</summary>
          */
         [ObservableProperty]
-        private object _currentView;
+        private object currentView;
 
         /**
          *<summary>
@@ -36,21 +43,54 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
 
         public MainWindowViewModel() : base(displayName: "UWB Geolocalisation Visualizer")
         {
-            this.localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
-            CurrentView = localizerViewModel;
-            this.Commands = new ObservableCollection<CommandViewModel>
+            localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
+            anchorViewModel = new AnchorViewModel(
+                    id: localizerViewModel.Anchors.Count,
+                    displayName: "Podaj położenie kotwicy",
+                    localizerViewModel: localizerViewModel,
+                    OnRequestUpsertAnchorAction: ReallocateAnchorViewModel
+                );
+            Commands = new ObservableCollection<CommandViewModel>
             {
                 new CommandViewModel(
                         displayName: "Dodaj kotwicę",
-                        command: new RelayCommand(delegate { }) //TODO: change the empty delegate to an appropriate command adding an anhor
+                        command: new ToggleAnchorDialogVisibilityCommand(anchorViewModel)
                     ),
                 new CommandViewModel(
                         displayName: "Zakończ",
-                        command: new CloseCommand()
+                        command: new CloseCommand( () => { System.Windows.Application.Current.Shutdown(); } )
                     )
             };
-            //Setting the CloseCommand.RequestClose effect - that is giving it the opportunity to close the application.
-            (this.Commands[1].Command as CloseCommand)!.RequestClose += delegate { System.Windows.Application.Current.Shutdown(); };
+            CurrentView = localizerViewModel;
+        }
+
+        /**
+         *<summary>
+         * This method is used to create a new instance of AnchorViewModel for adding anchors OnRequestUpsertAnchor
+         * when the existing AVM is becoming an existing and displayed Anchor.
+         *</summary>
+         */
+        private void ReallocateAnchorViewModel()
+        {
+            AnchorViewModel = new AnchorViewModel(
+                    id: localizerViewModel.Anchors.Count,
+                    displayName: "Podaj położenie kotwicy",
+                    localizerViewModel: localizerViewModel,
+                    OnRequestUpsertAnchorAction: ReallocateAnchorViewModel
+                );
+            CommandViewModel tmp = new(
+                        displayName: "Dodaj kotwicę",
+                        command: new ToggleAnchorDialogVisibilityCommand(AnchorViewModel)
+                    );
+            foreach ( CommandViewModel command in Commands )
+            {
+                if(command.Equals(tmp))
+                {
+                    command.Command = tmp.Command;  //binding the command with new AVM
+                    break;
+                }
+            }
+            //TODO: check why the location properties are still the same in the view even with CommandManager.InvalidateRequerySuggested();
         }
     }
 }
