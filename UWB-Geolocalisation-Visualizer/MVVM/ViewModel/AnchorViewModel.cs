@@ -47,7 +47,7 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
                     requestAddAnchorDelegates: new Action[] { OnRequestUpsertAnchorAction, OnRequestUpsertAnchor }
                 );
             upsertAnchorCommandViewModel = new CommandViewModel(
-                    displayName: "Dodaj " + (localizerViewModel.Anchors.Count + 1).ToString() + " kotwicę",
+                    displayName: "Dodaj " + (id + 1).ToString() + " kotwicę",
                     command: upsertAnchorCommand
                 );
         }
