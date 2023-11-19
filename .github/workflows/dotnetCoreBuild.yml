@@ -24,4 +24,4 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Test with dotnet
-      run: dotnet test ./UWB-Geolocalisation-Visualizer.sln --configuration Release
+      run: dotnet test ./UWB-Geolocation-Visualizer.sln --configuration Release
