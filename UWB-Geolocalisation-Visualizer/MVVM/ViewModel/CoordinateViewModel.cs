@@ -7,13 +7,14 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
     public partial class CoordinateViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private string location = "";
+        private string location;
 
         private readonly RegexValidator previewNumbersOnlyRegexValidator;
 
         public CoordinateViewModel(string displayName) : base(displayName)
         {
             previewNumbersOnlyRegexValidator = new RegexValidator("\\P{Nd}");
+            Location = "";
         }
 
         partial void OnLocationChanged(string value)
@@ -21,10 +22,7 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
             string validatedValue = previewNumbersOnlyRegexValidator.Validate(value);
             if(validatedValue != value)
             {
-                //We want a direct reference to prevent not necessery calls
-                #pragma warning disable MVVMTK0034 // Direct field reference to [ObservableProperty] backing field
-                this.location = validatedValue;
-                #pragma warning restore MVVMTK0034 // Direct field reference to [ObservableProperty] backing field
+                this.Location = validatedValue;
             }
         }
     }

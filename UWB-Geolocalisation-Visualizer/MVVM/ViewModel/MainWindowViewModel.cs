@@ -44,9 +44,13 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
         public MainWindowViewModel() : base(displayName: "UWB Geolocalisation Visualizer")
         {
             localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
-            anchorViewModel = new AnchorViewModel(displayName: "Podaj położenie kotwicy");
-            CurrentView = localizerViewModel;
-            this.Commands = new ObservableCollection<CommandViewModel>
+            anchorViewModel = new AnchorViewModel(
+                    id: localizerViewModel.Anchors.Count,
+                    displayName: "Podaj położenie kotwicy",
+                    localizerViewModel: localizerViewModel,
+                    OnRequestUpsertAnchorAction: ReallocateAnchorViewModel
+                );
+            Commands = new ObservableCollection<CommandViewModel>
             {
                 new CommandViewModel(
                         displayName: "Dodaj kotwicę",
@@ -57,6 +61,36 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
                         command: new CloseCommand( () => { System.Windows.Application.Current.Shutdown(); } )
                     )
             };
+            CurrentView = localizerViewModel;
+        }
+
+        /**
+         *<summary>
+         * This method is used to create a new instance of AnchorViewModel for adding anchors OnRequestUpsertAnchor
+         * when the existing AVM is becoming an existing and displayed Anchor.
+         *</summary>
+         */
+        private void ReallocateAnchorViewModel()
+        {
+            AnchorViewModel = new AnchorViewModel(
+                    id: localizerViewModel.Anchors.Count,
+                    displayName: "Podaj położenie kotwicy",
+                    localizerViewModel: localizerViewModel,
+                    OnRequestUpsertAnchorAction: ReallocateAnchorViewModel
+                );
+            CommandViewModel tmp = new(
+                        displayName: "Dodaj kotwicę",
+                        command: new ToggleAnchorDialogVisibilityCommand(AnchorViewModel)
+                    );
+            foreach ( CommandViewModel command in Commands )
+            {
+                if(command.Equals(tmp))
+                {
+                    command.Command = tmp.Command;  //binding the command with new AVM
+                    break;
+                }
+            }
+            //TODO: check why the location properties are still the same in the view even with CommandManager.InvalidateRequerySuggested();
         }
     }
 }

@@ -24,32 +24,44 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private string points;
 
+        [ObservableProperty]
         private TailSitesEnum dialogSite;
 
         public AnchorDialogTailViewModel(string displayName, TailSitesEnum dialogSite) : base(displayName)
         {
             this.dialogSite = dialogSite;
-            switch(this.dialogSite)
-            {   
+            SwitchSideIfNeeded();
+            Points = pointsDictionary["Left"]; //to suppress the warning of uniinitialized property
+        }
+
+        partial void OnDialogSiteChanged(TailSitesEnum value)
+        {
+            SwitchSideIfNeeded();
+        }
+
+        private void SwitchSideIfNeeded()
+        {
+            switch (DialogSite)
+            {
                 case TailSitesEnum.Right:
-                    left = (int)AnchorPositionLeftEnum.Right;
-                    bottom = (int)AnchorPositionBottomEnum.LeftRight;
-                    points = this.pointsDictionary["Right"];
+                    Left = (int)AnchorPositionLeftEnum.Right;
+                    Bottom = (int)AnchorPositionBottomEnum.LeftRight;
+                    Points = pointsDictionary["Right"];
                     break;
                 case TailSitesEnum.Top:
-                    left = (int)AnchorPositionLeftEnum.TopBottom;
-                    bottom = (int)AnchorPositionBottomEnum.Top;
-                    points = this.pointsDictionary["Top"];
+                    Left = (int)AnchorPositionLeftEnum.TopBottom;
+                    Bottom = (int)AnchorPositionBottomEnum.Top;
+                    Points = pointsDictionary["Top"];
                     break;
                 case TailSitesEnum.Bottom:
-                    left = (int)AnchorPositionLeftEnum.TopBottom;
-                    bottom = (int)AnchorPositionBottomEnum.Bottom;
-                    points = this.pointsDictionary["Bottom"];
+                    Left = (int)AnchorPositionLeftEnum.TopBottom;
+                    Bottom = (int)AnchorPositionBottomEnum.Bottom;
+                    Points = pointsDictionary["Bottom"];
                     break;
                 default:
-                    left = (int)AnchorPositionLeftEnum.Left;
-                    bottom = (int)AnchorPositionBottomEnum.LeftRight;
-                    points = this.pointsDictionary["Left"];
+                    Left = (int)AnchorPositionLeftEnum.Left;
+                    Bottom = (int)AnchorPositionBottomEnum.LeftRight;
+                    Points = pointsDictionary["Left"];
                     break;
             }
         }

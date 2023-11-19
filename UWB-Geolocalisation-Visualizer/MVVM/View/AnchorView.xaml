@@ -68,13 +68,13 @@
 
                     <ContentControl 
                         Grid.Column="1"
-                        Content="{Binding XCoordinateViewModel}"
+                        Content="{Binding XCoordinateViewModel, UpdateSourceTrigger=PropertyChanged}"
                         ContentTemplate="{StaticResource CoordinateInputTemplate}"
                     />
 
                     <ContentControl 
                         Grid.Column="3"
-                        Content="{Binding YCoordinateViewModel}"
+                        Content="{Binding YCoordinateViewModel, UpdateSourceTrigger=PropertyChanged}"
                         ContentTemplate="{StaticResource CoordinateInputTemplate}"
                     />
 
@@ -82,16 +82,15 @@
                         Grid.Column="1"
                         Grid.ColumnSpan="3"
                         Grid.Row="3" 
-                        Content="Dodaj"
-                        Width="70"
+                        Content="{Binding UpsertAnchorCommandViewModel.DisplayName, UpdateSourceTrigger=PropertyChanged}"
+                        Width="190"
                         Height="25"
                         HorizontalAlignment="Center"
                         FontSize="15"
                         Cursor="Hand"
                         Background="#096272"
                         Foreground="White"
-                        Command="{Binding AddAnchorCommandViewModel.Command}"/>
-
+                        Command="{Binding UpsertAnchorCommandViewModel.Command}"/>
                 </Grid>
             </StackPanel>
         </Grid>
