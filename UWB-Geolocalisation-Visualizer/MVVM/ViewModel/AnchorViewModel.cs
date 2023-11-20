@@ -15,6 +15,9 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
         private string visibility = "Collapsed";
 
         [ObservableProperty]
+        private string borderBackground = "Transparent";
+
+        [ObservableProperty]
         private string locationVisibility = "Collapsed";
 
         [ObservableProperty]
@@ -56,9 +59,14 @@ namespace UWB_Geolocalisation_Visualizer.MVVM.ViewModel
         {
             LocationVisibility = "Visible";
             Visibility = "Collapsed";
-            //TODO: adjust commands names and stuff in this metod
-            //What to do to display an Elypse without border? Maybe a transparent bg and visibility to polygon and stack panel???
-            //TODO: change name to OnRequestUpsertAnchor and do the stuff with calculating the anchorDialogTailViewModel localization
+            AnchorDialogTailViewModel.DisplayName = "Kotwica " + (Id + 1).ToString();
+            UpsertAnchorCommandViewModel.DisplayName = "Edytuj " + (Id + 1).ToString() + " kotwicę";
+            //TODO: do the stuff with calculating the anchorDialogTailViewModel localization
+        }
+
+        partial void OnVisibilityChanged(string value)
+        {
+            BorderBackground = (value == "Visible" ? "#3d8693" : "Transparent");
         }
 
         public bool Equals(AnchorViewModel? other)

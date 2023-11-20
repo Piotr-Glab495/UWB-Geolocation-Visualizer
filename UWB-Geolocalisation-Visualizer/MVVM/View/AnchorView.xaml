@@ -12,8 +12,7 @@
              >
     <Border
         CornerRadius="20"
-        Visibility="{Binding Visibility}"
-        Background="#3d8693"
+        Background="{Binding BorderBackground}"
         >
         <Grid>
             <Canvas>
@@ -22,6 +21,7 @@
                     Fill="#3d8693" 
                     HorizontalAlignment="Left" 
                     VerticalAlignment="Center" 
+                    Visibility="{Binding Visibility}"
                 />
 
                 <Ellipse
@@ -41,7 +41,7 @@
             <StackPanel 
                 Margin="10"
                 Orientation="Vertical"
-                Visibility="Visible"
+                Visibility="{Binding Visibility}"
             >
                 <TextBlock 
                     Text="Podaj lokalizację kotwicy"

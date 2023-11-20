@@ -19,12 +19,12 @@
                 VerticalAlignment="Center"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center" 
-                Text="{Binding Path=Location, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Path=Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             />
 
             <TextBlock
                 IsHitTestVisible="False"
-                Text="{Binding Path=DisplayName, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Path=DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 HorizontalAlignment="Center"
                 Margin="1"
                 Padding="5"
