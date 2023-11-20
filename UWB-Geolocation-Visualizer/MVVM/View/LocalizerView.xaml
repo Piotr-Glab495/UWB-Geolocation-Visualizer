@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="UWB_Geolocation_Visualizer.MVVM.View.LocalizerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:UWB_Geolocation_Visualizer.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="720"
+             d:DataContext="{d:DesignInstance Type=viewModel:LocalizerViewModel}"
+             Background="#22202F">
+    <Grid>
+        <Image x:Name="image" Height="100" Width="Auto" Source="http://thecybershadow.net/misc/stackoverflow.png"/>
+        <ItemsControl
+            Name="LocalizerMapItemsControl"
+            ItemsSource="{Binding Anchors}"
+            >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type viewModel:AnchorViewModel}">
+                    <ContentControl Content="{Binding}" ContentTemplate="{StaticResource {x:Type viewModel:AnchorViewModel}}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding XCoordinateViewModel.Location}"/>
+                    <Setter Property="Canvas.Bottom" Value="{Binding YCoordinateViewModel.Location}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </Grid>
+</UserControl>
