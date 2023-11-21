@@ -41,7 +41,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private ObservableCollection<CommandViewModel> commands;
 
-        public MainWindowViewModel() : base(displayName: "UWB Geolocalisation Visualizer")
+        public MainWindowViewModel() : base(displayName: "UWB Geolocation Visualizer")
         {
             localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
             anchorViewModel = new AnchorViewModel(
@@ -90,7 +90,6 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     break;
                 }
             }
-            //TODO: check why the location properties are still the same in the view even with CommandManager.InvalidateRequerySuggested();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <DataTemplate x:Key="CoordinateInputTemplate">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModel="clr-namespace:UWB_Geolocation_Visualizer.MVVM.ViewModel">
+    <DataTemplate x:Key="CoordinateInputTemplate" DataType="{x:Type viewModel:CoordinateViewModel}">
         <Grid>
             <TextBox
                 BorderThickness="0"

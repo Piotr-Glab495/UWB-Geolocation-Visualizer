@@ -21,6 +21,10 @@
                 <view:AnchorView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:CoordinateViewModel}">
+                <view:CoordinateInputView />
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

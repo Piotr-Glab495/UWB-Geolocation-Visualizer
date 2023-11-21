@@ -65,7 +65,7 @@
                 Margin="0, 20, 0, 0"
                 Grid.RowSpan="2"
                 Grid.Column="1" 
-                Content="{Binding AnchorViewModel, UpdateSourceTrigger=PropertyChanged}"
+                Content="{Binding AnchorViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Height="150"
                 Width="250"
                 HorizontalAlignment="Left"

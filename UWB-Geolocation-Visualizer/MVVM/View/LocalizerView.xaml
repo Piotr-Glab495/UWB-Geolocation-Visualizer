@@ -21,7 +21,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type viewModel:AnchorViewModel}">
-                    <ContentControl Content="{Binding}" ContentTemplate="{StaticResource {x:Type viewModel:AnchorViewModel}}" />
+                    <ContentControl Content="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
