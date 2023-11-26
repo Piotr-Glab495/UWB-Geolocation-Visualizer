@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModel="clr-namespace:UWB_Geolocation_Visualizer.MVVM.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModel:AnchorViewModel}"
              Background="Transparent"
              d:DesignHeight="{Binding Height}"
              d:DesignWidth="{Binding Width}"
              >
-    <Canvas>
+    <Canvas VerticalAlignment="Center">
         <Ellipse
             Width="15"
             Height="15"
@@ -20,10 +21,16 @@
             Visibility="{Binding LocationVisibility}"
             Panel.ZIndex="3"
             Canvas.Top="-15"
-        />
+        >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ToggleDialogVisibilityCommandViewModel.Command}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Ellipse>
 
         <Polygon 
-            Points="7, -7.5 -27.5, -41.5 7.5, -41.5"
+            Points="{Binding AnchorDialogTailViewModel.Points}"
             Fill="#3d8693" 
             Visibility="{Binding Visibility}"
             Panel.ZIndex="2"
@@ -32,8 +39,8 @@
         <Border
             CornerRadius="20"
             Background="#3d8693"
-            Canvas.Bottom="33"
-            Canvas.Left="-238"
+            Canvas.Bottom="{Binding AnchorDialogTailViewModel.Bottom}"
+            Canvas.Left="{Binding AnchorDialogTailViewModel.Left}"
         >
             <StackPanel 
                 Panel.ZIndex="1"

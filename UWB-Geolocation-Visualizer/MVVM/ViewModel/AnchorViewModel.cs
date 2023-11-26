@@ -3,6 +3,7 @@ using System;
 using UWB_Geolocation_Visualizer.Core;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.AnchorView;
+using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Enums;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
@@ -38,6 +39,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private CommandViewModel upsertAnchorCommandViewModel;
 
+        [ObservableProperty]
+        private CommandViewModel toggleDialogVisibilityCommandViewModel;
+
         public AnchorViewModel(
             int id,
             string displayName,
@@ -58,6 +62,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             upsertAnchorCommandViewModel = new CommandViewModel(
                     displayName: "Dodaj " + (id + 1).ToString() + " kotwicę",
                     command: upsertAnchorCommand
+                );
+            toggleDialogVisibilityCommandViewModel = new CommandViewModel(
+                    displayName: "Edytuj kotwicę",
+                    command: new ToggleAnchorDialogVisibilityCommand(this)
                 );
         }
 
