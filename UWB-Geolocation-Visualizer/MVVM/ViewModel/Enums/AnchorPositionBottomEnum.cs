@@ -2,8 +2,10 @@
 {
     public enum AnchorPositionBottomEnum
     {
-        LeftRight = 74,
+        LeftRight = -74,
         Top = 168,
-        Bottom = -23
+        Bottom = -23,
+        TopCorner = 0,
+        BottomCorner = 0
     }
 }

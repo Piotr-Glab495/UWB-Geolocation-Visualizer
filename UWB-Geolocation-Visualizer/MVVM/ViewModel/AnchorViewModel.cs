@@ -21,6 +21,12 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private string locationVisibility = "Collapsed";
 
         [ObservableProperty]
+        private int height = 150;
+
+        [ObservableProperty]
+        private int width = 250;
+
+        [ObservableProperty]
         private CoordinateViewModel xCoordinateViewModel;
 
         [ObservableProperty]
@@ -61,7 +67,6 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             Visibility = "Collapsed";
             AnchorDialogTailViewModel.DisplayName = "Kotwica " + (Id + 1).ToString();
             UpsertAnchorCommandViewModel.DisplayName = "Edytuj " + (Id + 1).ToString() + " kotwicę";
-            //TODO: do the stuff with calculating the anchorDialogTailViewModel localization
         }
 
         partial void OnVisibilityChanged(string value)

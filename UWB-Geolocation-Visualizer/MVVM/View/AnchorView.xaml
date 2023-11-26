@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModel:AnchorViewModel}"
              Background="Transparent"
-             d:DesignHeight="150"
-             d:DesignWidth="250"
+             d:DesignHeight="{Binding Height}"
+             d:DesignWidth="{Binding Width}"
              >
     <Canvas>
         <Ellipse
@@ -23,7 +23,7 @@
         />
 
         <Polygon 
-            Points="{Binding AnchorDialogTailViewModel.Points}"
+            Points="7, -7.5 -27.5, -41.5 7.5, -41.5"
             Fill="#3d8693" 
             Visibility="{Binding Visibility}"
             Panel.ZIndex="2"
@@ -32,8 +32,8 @@
         <Border
             CornerRadius="20"
             Background="#3d8693"
-            Canvas.Bottom="{Binding AnchorDialogTailViewModel.Bottom}"
-            Canvas.Left="{Binding AnchorDialogTailViewModel.Left}"
+            Canvas.Bottom="168"
+            Canvas.Left="28"
         >
             <StackPanel 
                 Panel.ZIndex="1"
