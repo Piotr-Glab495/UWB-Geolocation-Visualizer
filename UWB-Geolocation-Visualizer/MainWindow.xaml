@@ -55,6 +55,8 @@
                 x:Name="LocalizerViewControl"
                 Grid.Row="1"
                 Grid.Column="1" 
+                Margin="0"
+                Padding="0"
                 Content="{Binding CurrentView}" 
                 Panel.ZIndex="1"
             />
@@ -62,7 +64,7 @@
             <ContentControl
                 x:Name="AnchorViewControl"
                 Grid.Row="0"
-                Margin="0, 20, 0, 0"
+                Margin="0, 93, 0, 0"
                 Grid.RowSpan="2"
                 Grid.Column="1" 
                 Content="{Binding AnchorViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

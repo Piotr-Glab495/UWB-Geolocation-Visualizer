@@ -10,35 +10,33 @@
              d:DesignHeight="150"
              d:DesignWidth="250"
              >
-    <Border
-        CornerRadius="20"
-        Background="{Binding BorderBackground}"
-        >
-        <Grid>
-            <Canvas>
-                <Polygon 
-                    Points="{Binding AnchorDialogTailViewModel.Points}" 
-                    Fill="#3d8693" 
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" 
-                    Visibility="{Binding Visibility}"
-                />
+    <Canvas>
+        <Ellipse
+            Width="15"
+            Height="15"
+            Fill="#096272" 
+            Stroke="White"
+            StrokeThickness="1" 
+            Visibility="{Binding LocationVisibility}"
+            Panel.ZIndex="3"
+            Canvas.Top="-15"
+        />
 
-                <Ellipse
-                    Width="15" 
-                    Height="15"
-                    Fill="#096272" 
-                    Stroke="White"
-                    StrokeThickness="1" 
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Visibility="{Binding LocationVisibility}"
-                    Canvas.Left="{Binding AnchorDialogTailViewModel.Left}"
-                    Canvas.Bottom="{Binding AnchorDialogTailViewModel.Bottom}"
-                />
-            </Canvas>
-            
+        <Polygon 
+            Points="{Binding AnchorDialogTailViewModel.Points}"
+            Fill="#3d8693" 
+            Visibility="{Binding Visibility}"
+            Panel.ZIndex="2"
+        />
+        
+        <Border
+            CornerRadius="20"
+            Background="#3d8693"
+            Canvas.Bottom="{Binding AnchorDialogTailViewModel.Bottom}"
+            Canvas.Left="{Binding AnchorDialogTailViewModel.Left}"
+        >
             <StackPanel 
+                Panel.ZIndex="1"
                 Margin="10"
                 Orientation="Vertical"
                 Visibility="{Binding Visibility}"
@@ -49,7 +47,6 @@
                     FontSize="16"
                     HorizontalAlignment="Center"
                     Margin="0,0,0,20" />
-
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5" />
@@ -169,6 +166,6 @@
                         Command="{Binding UpsertAnchorCommandViewModel.Command}"/>
                 </Grid>
             </StackPanel>
-        </Grid>
-    </Border>
+        </Border>
+    </Canvas>
 </UserControl>
