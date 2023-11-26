@@ -15,7 +15,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             { "Bottom", "7, -7.5 -10, 26.5 25, 26.5"},
             { "LeftTop", "7, -7.5 7.5, 26.5 42.5, 26.5"},
             { "RightTop", "7, -7.5 -27.5, 26.5 7.5, 26.5"},
-            { "LeftBottom", "7, -7.5 7.5, -41.5 42.5, -41.5"},
+            { "LeftBottom", "7, -7.5 7.5, -46 42.5, -41.5"},
             { "RightBottom", "7, -7.5 -27.5, -41.5 7.5, -41.5"},
         }; 
 
@@ -64,22 +64,22 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     break;
                 case TailSitesEnum.LeftTopCorner:
                     Left = (int)AnchorPositionLeftEnum.LeftCorner;
-                    Bottom = (int)AnchorPositionBottomEnum.TopCorner;
+                    Bottom = (int)AnchorPositionBottomEnum.Bottom;
                     Points = pointsDictionary["LeftTop"];
                     break;
                 case TailSitesEnum.RightTopCorner:
                     Left = (int)AnchorPositionLeftEnum.RightCorner;
-                    Bottom = (int)AnchorPositionBottomEnum.TopCorner;
+                    Bottom = (int)AnchorPositionBottomEnum.Bottom;
                     Points = pointsDictionary["RightTop"];
                     break;
                 case TailSitesEnum.LeftBottomCorner:
                     Left = (int)AnchorPositionLeftEnum.LeftCorner;
-                    Bottom = (int)AnchorPositionBottomEnum.BottomCorner;
+                    Bottom = (int)AnchorPositionBottomEnum.Top;
                     Points = pointsDictionary["LeftBottom"];
                     break;
                 case TailSitesEnum.RightBottomCorner:
                     Left = (int)AnchorPositionLeftEnum.RightCorner;
-                    Bottom = (int)AnchorPositionBottomEnum.BottomCorner;
+                    Bottom = (int)AnchorPositionBottomEnum.Top;
                     Points = pointsDictionary["RightBottom"];
                     break;
                 default:

@@ -5,7 +5,7 @@
         Left = 28,
         Right = -265,
         TopBottom = -117,
-        LeftCorner = 0,
-        RightCorner = 0
+        LeftCorner = 5,
+        RightCorner = -238
     }
 }

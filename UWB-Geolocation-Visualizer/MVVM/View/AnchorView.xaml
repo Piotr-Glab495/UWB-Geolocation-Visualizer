@@ -32,8 +32,8 @@
         <Border
             CornerRadius="20"
             Background="#3d8693"
-            Canvas.Bottom="168"
-            Canvas.Left="28"
+            Canvas.Bottom="33"
+            Canvas.Left="-238"
         >
             <StackPanel 
                 Panel.ZIndex="1"
