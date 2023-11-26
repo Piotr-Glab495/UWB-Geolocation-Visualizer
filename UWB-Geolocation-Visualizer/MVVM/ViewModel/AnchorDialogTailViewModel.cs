@@ -5,7 +5,7 @@ using UWB_Geolocation_Visualizer.MVVM.ViewModel.Enums;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 {
-    public partial class AnchorDialogTailViewModel : ViewModelBase
+    public partial class AnchorDialogViewModel : ViewModelBase
     {
         private readonly IDictionary<string, string> pointsDictionary = new Dictionary<string, string>
         {
@@ -31,7 +31,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private TailSitesEnum dialogSite;
 
-        public AnchorDialogTailViewModel(string displayName, TailSitesEnum dialogSite) : base(displayName)
+        public AnchorDialogViewModel(string displayName, TailSitesEnum dialogSite) : base(displayName)
         {
             this.dialogSite = dialogSite;
             SwitchSideIfNeeded();

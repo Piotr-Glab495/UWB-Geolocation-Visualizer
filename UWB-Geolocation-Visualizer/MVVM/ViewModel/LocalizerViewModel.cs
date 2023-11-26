@@ -20,7 +20,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         public void UpsertAnchor(AnchorViewModel anchorViewModel)
         {
-            Prepare(anchorViewModel);
+            PrepareAnchorForDisplaying(anchorViewModel);
             var existingAnchor = Anchors.FirstOrDefault(a => a.Equals(anchorViewModel));
 
             if (existingAnchor != null)
@@ -28,22 +28,21 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 Update(anchorViewModel);
             }
             else
-            {
+            {                
                 Anchors.Add(anchorViewModel);
             }
         }
 
         private void Update(AnchorViewModel anchorViewModel)
         {
-            //TODO: Check if this works after adjusting AVM.OnRequestAddAnchor
             foreach (AnchorViewModel anchor in Anchors)
             {
                 if(anchor.Equals(anchorViewModel))
                 {
-                    anchor.XCoordinateViewModel = anchorViewModel.YCoordinateViewModel;
-                    anchor.YCoordinateViewModel = anchorViewModel.XCoordinateViewModel;
+                    anchor.XCoordinateViewModel = anchorViewModel.XCoordinateViewModel;
+                    anchor.YCoordinateViewModel = anchorViewModel.YCoordinateViewModel;
                     anchor.UpsertAnchorCommandViewModel = anchorViewModel.UpsertAnchorCommandViewModel;
-                    anchor.AnchorDialogTailViewModel = anchorViewModel.AnchorDialogTailViewModel;
+                    anchor.AnchorDialogViewModel = anchorViewModel.AnchorDialogViewModel;
                     anchor.DisplayName = anchorViewModel.DisplayName;
                     anchor.LocationVisibility = anchorViewModel.LocationVisibility;
                     anchor.Visibility = anchorViewModel.Visibility;
@@ -52,7 +51,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             }
         }
 
-        private void Prepare(AnchorViewModel anchorViewModel)
+        //TODO: Add a messenger and use it to react to the SourceUpdated event with this method
+        public void PrepareAnchorForDisplaying(AnchorViewModel anchorViewModel)
         {
             int x = int.Parse(anchorViewModel.XCoordinateViewModel.Location);
             int y = int.Parse(anchorViewModel.YCoordinateViewModel.Location);
@@ -61,17 +61,17 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             {
                 if (y <= 0.5 * anchorViewModel.Height)
                 {
-                    anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.LeftBottomCorner;
+                    anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.LeftBottomCorner;
                     return;
                 }
 
                 if (y >= (this.Height - 0.5 * anchorViewModel.Height))
                 {
-                    anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.LeftTopCorner;
+                    anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.LeftTopCorner;
                     return;
                 }
 
-                anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.Left;
+                anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Left;
                 return;
             }
 
@@ -79,33 +79,33 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             {
                 if (y <= 0.5 * anchorViewModel.Height)
                 {
-                    anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.RightBottomCorner;
+                    anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.RightBottomCorner;
                     return;
                 }
 
                 if (y >= (this.Height - 0.5 * anchorViewModel.Height))
                 {
-                    anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.RightTopCorner;
+                    anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.RightTopCorner;
                     return;
                 }
 
-                anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.Right;
+                anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Right;
                 return;
             }
 
             if (y <= 0.5 * anchorViewModel.Height)
             {
-                anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.Top;
+                anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Top;
                 return;
             }
 
             if (y >= (this.Height - 0.5 * anchorViewModel.Height))
             {
-                anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.Bottom;
+                anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Bottom;
                 return;
             }
 
-            anchorViewModel.AnchorDialogTailViewModel.DialogSite = Enums.TailSitesEnum.Left;
+            anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Left;
         }
     }
 }

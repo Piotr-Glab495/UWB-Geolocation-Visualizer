@@ -34,7 +34,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private CoordinateViewModel yCoordinateViewModel;
 
         [ObservableProperty]
-        private AnchorDialogTailViewModel anchorDialogTailViewModel;
+        private AnchorDialogViewModel anchorDialogViewModel;
 
         [ObservableProperty]
         private CommandViewModel upsertAnchorCommandViewModel;
@@ -53,7 +53,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             Id = id;
             XCoordinateViewModel = new CoordinateViewModel(displayName: "X:");
             YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:");
-            anchorDialogTailViewModel = new AnchorDialogTailViewModel(displayName: "AddingAnchor", tailDialogSite);
+            anchorDialogViewModel = new AnchorDialogViewModel(displayName: "AddingAnchor", tailDialogSite);
             UpsertAnchorCommand upsertAnchorCommand = new(
                     anchorViewModel: this,
                     localizerViewModel: localizerViewModel,
@@ -73,7 +73,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         {
             LocationVisibility = "Visible";
             Visibility = "Collapsed";
-            AnchorDialogTailViewModel.DisplayName = "Kotwica " + (Id + 1).ToString();
+            AnchorDialogViewModel.DisplayName = "Kotwica " + (Id + 1).ToString();
             UpsertAnchorCommandViewModel.DisplayName = "Edytuj " + (Id + 1).ToString() + " kotwicę";
         }
 
