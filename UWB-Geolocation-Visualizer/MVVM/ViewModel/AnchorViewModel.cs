@@ -3,6 +3,7 @@ using System;
 using UWB_Geolocation_Visualizer.Core;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.AnchorView;
+using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Enums;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
@@ -21,16 +22,25 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private string locationVisibility = "Collapsed";
 
         [ObservableProperty]
+        private int height = 150;
+
+        [ObservableProperty]
+        private int width = 250;
+
+        [ObservableProperty]
         private CoordinateViewModel xCoordinateViewModel;
 
         [ObservableProperty]
         private CoordinateViewModel yCoordinateViewModel;
 
         [ObservableProperty]
-        private AnchorDialogTailViewModel anchorDialogTailViewModel;
+        private AnchorDialogViewModel anchorDialogViewModel;
 
         [ObservableProperty]
         private CommandViewModel upsertAnchorCommandViewModel;
+
+        [ObservableProperty]
+        private CommandViewModel toggleDialogVisibilityCommandViewModel;
 
         public AnchorViewModel(
             int id,
@@ -43,7 +53,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             Id = id;
             XCoordinateViewModel = new CoordinateViewModel(displayName: "X:");
             YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:");
-            anchorDialogTailViewModel = new AnchorDialogTailViewModel(displayName: "AddingAnchor", tailDialogSite);
+            anchorDialogViewModel = new AnchorDialogViewModel(displayName: "AddingAnchor", tailDialogSite);
             UpsertAnchorCommand upsertAnchorCommand = new(
                     anchorViewModel: this,
                     localizerViewModel: localizerViewModel,
@@ -53,15 +63,18 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     displayName: "Dodaj " + (id + 1).ToString() + " kotwicę",
                     command: upsertAnchorCommand
                 );
+            toggleDialogVisibilityCommandViewModel = new CommandViewModel(
+                    displayName: "Edytuj kotwicę",
+                    command: new ToggleAnchorDialogVisibilityCommand(this)
+                );
         }
 
         private void OnRequestUpsertAnchor()
         {
             LocationVisibility = "Visible";
             Visibility = "Collapsed";
-            AnchorDialogTailViewModel.DisplayName = "Kotwica " + (Id + 1).ToString();
+            AnchorDialogViewModel.DisplayName = "Kotwica " + (Id + 1).ToString();
             UpsertAnchorCommandViewModel.DisplayName = "Edytuj " + (Id + 1).ToString() + " kotwicę";
-            //TODO: do the stuff with calculating the anchorDialogTailViewModel localization
         }
 
         partial void OnVisibilityChanged(string value)

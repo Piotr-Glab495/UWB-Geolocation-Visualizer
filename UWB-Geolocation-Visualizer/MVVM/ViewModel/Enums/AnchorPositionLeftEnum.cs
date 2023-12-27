@@ -4,6 +4,8 @@
     {
         Left = 28,
         Right = -265,
-        TopBottom = -117
+        TopBottom = -117,
+        LeftCorner = 5,
+        RightCorner = -238
     }
 }

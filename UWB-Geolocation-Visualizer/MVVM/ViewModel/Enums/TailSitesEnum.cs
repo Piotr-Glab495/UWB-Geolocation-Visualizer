@@ -5,6 +5,10 @@
         Left,
         Right, 
         Top, 
-        Bottom
+        Bottom,
+        LeftBottomCorner,
+        RightBottomCorner,
+        LeftTopCorner,
+        RightTopCorner
     }
 }
