@@ -175,4 +175,8 @@
             </StackPanel>
         </Border>
     </Canvas>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding UpsertAnchorCommandViewModel.Command}" />
+    </UserControl.InputBindings>
 </UserControl>
