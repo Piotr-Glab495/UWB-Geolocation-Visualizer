@@ -26,8 +26,23 @@
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding XCoordinateViewModel.Location}"/>
+                    <Setter Property="Canvas.Left">
+                        <Setter.Value>
+                            <MultiBinding Converter="{StaticResource MultiParameterBorderConverter}" ConverterParameter="X">
+                                <Binding Path="XCoordinateViewModel.Location" />
+                                <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
+                            </MultiBinding>
+                        </Setter.Value>
+                    </Setter>
                     <Setter Property="Canvas.Bottom" Value="{Binding YCoordinateViewModel.Location}"/>
+                    <Setter Property="Canvas.Bottom">
+                        <Setter.Value>
+                            <MultiBinding Converter="{StaticResource MultiParameterBorderConverter}" ConverterParameter="Y">
+                                <Binding Path="YCoordinateViewModel.Location" />
+                                <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
+                            </MultiBinding>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>

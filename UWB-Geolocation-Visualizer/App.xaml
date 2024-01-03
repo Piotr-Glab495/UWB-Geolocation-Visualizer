@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModel="clr-namespace:UWB_Geolocation_Visualizer.MVVM.ViewModel"
              xmlns:view="clr-namespace:UWB_Geolocation_Visualizer.MVVM.View"
+             xmlns:model="clr-namespace:UWB_Geolocation_Visualizer.MVVM.Model"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -25,6 +26,7 @@
                 <view:CoordinateInputView />
             </DataTemplate>
 
+            <model:MultiParameterBorderConverter x:Key="MultiParameterBorderConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

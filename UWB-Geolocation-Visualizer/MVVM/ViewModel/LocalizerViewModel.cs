@@ -16,6 +16,18 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private int height = 600;
 
+        [ObservableProperty]
+        private int xBorderMin = -360;
+
+        [ObservableProperty]
+        private int xBorderMax = 360;
+
+        [ObservableProperty]
+        private int yBorderMin = -300;
+
+        [ObservableProperty]
+        private int yBorderMax = 300;
+
         public LocalizerViewModel(string displayName) : base(displayName) { }
 
         public void UpsertAnchor(AnchorViewModel anchorViewModel)
