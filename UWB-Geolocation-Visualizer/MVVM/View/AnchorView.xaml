@@ -38,7 +38,7 @@
         
         <Border
             CornerRadius="20"
-            Background="#3d8693"
+            Background="{Binding BorderBackground}"
             Canvas.Bottom="{Binding AnchorDialogViewModel.Bottom}"
             Canvas.Left="{Binding AnchorDialogViewModel.Left}"
         >
@@ -49,7 +49,7 @@
                 Visibility="{Binding Visibility}"
             >
                 <TextBlock 
-                    Text="Podaj lokalizację kotwicy"
+                    Text="{Binding DisplayName}"
                     Foreground="White"
                     FontSize="16"
                     HorizontalAlignment="Center"

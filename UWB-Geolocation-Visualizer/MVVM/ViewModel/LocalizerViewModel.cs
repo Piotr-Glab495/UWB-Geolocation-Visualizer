@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UWB_Geolocation_Visualizer.Core;
@@ -17,18 +18,12 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private int height = 600;
 
         [ObservableProperty]
-        private int xBorderMin = -360;
+        private BordersSetterViewModel bordersSetterViewModel;
 
-        [ObservableProperty]
-        private int xBorderMax = 360;
-
-        [ObservableProperty]
-        private int yBorderMin = -300;
-
-        [ObservableProperty]
-        private int yBorderMax = 300;
-
-        public LocalizerViewModel(string displayName) : base(displayName) { }
+        public LocalizerViewModel(string displayName) : base(displayName) 
+        {
+            BordersSetterViewModel = new BordersSetterViewModel("Podaj granice obszaru lokalizacji", OnSetBorders);
+        }
 
         public void UpsertAnchor(AnchorViewModel anchorViewModel)
         {
@@ -64,11 +59,55 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         }
 
         //TODO: Add a messenger and use it to react to the SourceUpdated event with this method
-        public void PrepareAnchorForDisplaying(AnchorViewModel anchorViewModel)
+        /**
+         * <summary>
+         * Method parsing the coordinates locations to double precision numbers, optionally updating their values if they made no sense and calculating 
+         * the site of AnchorView's Ellipse on which the AnchorView's dialog should be then displayed.
+         * </summary>
+         */
+        public void PrepareAnchorForDisplaying(AnchorViewModel anchorViewModel, bool doFakeCoordinateChange = false)
         {
-            int x = int.Parse(anchorViewModel.XCoordinateViewModel.Location);
-            int y = int.Parse(anchorViewModel.YCoordinateViewModel.Location);
+            double x = this.ReadProperCoordinateValue(
+                anchorViewModel.XCoordinateViewModel.Location,
+                this.BordersSetterViewModel.XBorderMinViewModel.Location,
+                this.BordersSetterViewModel.XBorderMaxViewModel.Location
+            );
+            double y = this.ReadProperCoordinateValue(
+                anchorViewModel.YCoordinateViewModel.Location,
+                this.BordersSetterViewModel.YBorderMinViewModel.Location,
+                this.BordersSetterViewModel.YBorderMaxViewModel.Location
+            );
 
+            //this fake update is used to make anchorView change due to external borders changes
+            if (doFakeCoordinateChange)
+            {
+                x += 1.0;
+                anchorViewModel.XCoordinateViewModel.Location = x.ToString();
+                x -= 1.0;
+                anchorViewModel.XCoordinateViewModel.Location = x.ToString();
+                y += 1.0;
+                anchorViewModel.YCoordinateViewModel.Location = y.ToString();
+                y -= 1.0;
+                anchorViewModel.YCoordinateViewModel.Location = y.ToString();
+            } 
+            else
+            {
+                //this is to ensure a correct double value is assigned to the property currently
+                anchorViewModel.XCoordinateViewModel.Location = x.ToString();
+                anchorViewModel.YCoordinateViewModel.Location = y.ToString();
+            }
+
+            this.AdjustDialogSite(anchorViewModel, x, y);
+        }
+
+        /**
+         * <summary>
+         * Method calculating the site of AnchorView's Ellipse on which the AnchorView's dialog should be then displayed.
+         * </summary>
+         */
+        private void AdjustDialogSite(AnchorViewModel anchorViewModel, double x, double y)
+        {
+            //TODO: fix the method due to borderschagnes
             if (x <= 0.5 * anchorViewModel.Width)
             {
                 if (y <= 0.5 * anchorViewModel.Height)
@@ -118,6 +157,49 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             }
 
             anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Left;
+        }
+
+        /**
+         * <summary>
+         *  This is a method used to parse the location string to a double, bewaring of possible problems: invalid format, value lower than lower border or higher than higher border.
+         * </summary> 
+         */
+        private double ReadProperCoordinateValue(string coordinateToRead, string borderMinToRead, string borderMaxToRead)
+        {
+            if (!double.TryParse(coordinateToRead, out double value))
+            {
+                if (!double.TryParse(borderMinToRead, out value))
+                {
+                    value = 0.0;
+                    return value;
+                }
+                return value;
+            }
+
+            if (double.TryParse(borderMinToRead, out double borderMin) && value < borderMin)
+            {
+                return borderMin;
+            }
+
+            if (double.TryParse(borderMaxToRead, out double borderMax) && value > borderMax)
+            {
+                return borderMax;
+            }
+
+            return value;
+        }
+
+        /**
+         * <summary>
+         *  A method doing a fake update of the anchors coordinates to make their view change due to borders changes
+         * </summary>
+         */
+        private void OnSetBorders()
+        {
+            foreach(AnchorViewModel anchor in Anchors)
+            {
+                this.PrepareAnchorForDisplaying(anchor, doFakeCoordinateChange: true);
+            }
         }
     }
 }

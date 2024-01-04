@@ -14,7 +14,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
          * It is here for future purposes e.g. adding new views which would be bound to other ViewModels and switched with RelayCommands
          * </summary>
          */
-        private readonly LocalizerViewModel localizerViewModel;
+        [ObservableProperty]
+        private LocalizerViewModel localizerViewModel;
 
         /**
          *<summary>
@@ -45,16 +46,21 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         {
             localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
             anchorViewModel = new AnchorViewModel(
-                    id: localizerViewModel.Anchors.Count,
+                    id: LocalizerViewModel.Anchors.Count,
                     displayName: "Podaj położenie kotwicy",
-                    localizerViewModel: localizerViewModel,
+                    localizerViewModel: LocalizerViewModel,
                     OnRequestUpsertAnchorAction: ReallocateAnchorViewModel
                 );
+
             Commands = new ObservableCollection<CommandViewModel>
             {
                 new CommandViewModel(
                         displayName: "Dodaj kotwicę",
-                        command: new ToggleAnchorDialogVisibilityCommand(anchorViewModel)
+                        command: new ToggleDialogVisibilityCommand(anchorViewModel)
+                    ),
+                new CommandViewModel(
+                        displayName: "Edytuj obszar lokalizacji",
+                        command: new ToggleDialogVisibilityCommand(localizerViewModel.BordersSetterViewModel)
                     ),
                 new CommandViewModel(
                         displayName: "Zakończ",
@@ -73,14 +79,14 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private void ReallocateAnchorViewModel()
         {
             AnchorViewModel = new AnchorViewModel(
-                    id: localizerViewModel.Anchors.Count,
+                    id: LocalizerViewModel.Anchors.Count,
                     displayName: "Podaj położenie kotwicy",
-                    localizerViewModel: localizerViewModel,
+                    localizerViewModel: LocalizerViewModel,
                     OnRequestUpsertAnchorAction: ReallocateAnchorViewModel
                 );
             CommandViewModel tmp = new(
                         displayName: "Dodaj kotwicę",
-                        command: new ToggleAnchorDialogVisibilityCommand(AnchorViewModel)
+                        command: new ToggleDialogVisibilityCommand(AnchorViewModel)
                     );
             foreach ( CommandViewModel command in Commands )
             {

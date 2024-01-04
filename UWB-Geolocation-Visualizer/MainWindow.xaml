@@ -38,7 +38,7 @@
                 HorizontalAlignment="Left"
                 Foreground="White" 
                 FontSize="26"
-                Margin="20,0,0,0" 
+                Margin="15,0,0,0" 
                 Panel.ZIndex="1"/>
 
             <StackPanel Grid.Row="1" Panel.ZIndex="1">
@@ -73,8 +73,23 @@
                 Width="250"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Panel.ZIndex="1000"
+                Panel.ZIndex="100"
             />
+
+            <ContentControl
+                Visibility="{Binding LocalizerViewModel.BordersSetterViewModel.Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                x:Name="BordersSetterViewControl"
+                Grid.Row="0"
+                Margin="0, 97.5, 0, 0"
+                Grid.RowSpan="2"
+                Grid.Column="1"
+                Content="{Binding LocalizerViewModel.BordersSetterViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Height="150"
+                Width="250"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Panel.ZIndex="1000"
+/>
 
         </Grid>
     </Border>

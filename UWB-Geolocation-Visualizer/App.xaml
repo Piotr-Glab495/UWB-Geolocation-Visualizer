@@ -26,6 +26,10 @@
                 <view:CoordinateInputView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:BordersSetterViewModel}">
+                <view:BordersSetterView />
+            </DataTemplate>
+
             <model:MultiParameterBorderConverter x:Key="MultiParameterBorderConverter" />
         </ResourceDictionary>
     </Application.Resources>

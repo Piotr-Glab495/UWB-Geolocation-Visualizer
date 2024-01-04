@@ -8,16 +8,8 @@ using UWB_Geolocation_Visualizer.MVVM.ViewModel.Enums;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 {
-    public partial class AnchorViewModel : ViewModelBase
+    public partial class AnchorViewModel : DialogViewModel
     {
-        public int Id { get; set; }
-
-        [ObservableProperty]
-        private string visibility = "Collapsed";
-
-        [ObservableProperty]
-        private string borderBackground = "Transparent";
-
         [ObservableProperty]
         private string locationVisibility = "Collapsed";
 
@@ -65,7 +57,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 );
             toggleDialogVisibilityCommandViewModel = new CommandViewModel(
                     displayName: "Edytuj kotwicę",
-                    command: new ToggleAnchorDialogVisibilityCommand(this)
+                    command: new ToggleDialogVisibilityCommand(this)
                 );
         }
 
@@ -75,23 +67,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             Visibility = "Collapsed";
             AnchorDialogViewModel.DisplayName = "Kotwica " + (Id + 1).ToString();
             UpsertAnchorCommandViewModel.DisplayName = "Edytuj " + (Id + 1).ToString() + " kotwicę";
+            DisplayName = "Podaj nowe położenie kotwicy";
         }
-
-        partial void OnVisibilityChanged(string value)
-        {
-            BorderBackground = (value == "Visible" ? "#3d8693" : "Transparent");
-        }
-
-        public bool Equals(AnchorViewModel? other)
-        {
-            if (other is null)
-                return false;
-
-            return Id == other.Id;
-        }
-
-        public override bool Equals(object? obj) => Equals(obj as AnchorViewModel);
-
-        public override int GetHashCode() => Id.GetHashCode();
     }
 }

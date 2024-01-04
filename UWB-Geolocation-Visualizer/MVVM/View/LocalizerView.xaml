@@ -29,16 +29,15 @@
                     <Setter Property="Canvas.Left">
                         <Setter.Value>
                             <MultiBinding Converter="{StaticResource MultiParameterBorderConverter}" ConverterParameter="X">
-                                <Binding Path="XCoordinateViewModel.Location" />
+                                <Binding Path="XCoordinateViewModel.Location" Mode="TwoWay"  UpdateSourceTrigger="PropertyChanged" />
                                 <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
                             </MultiBinding>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Canvas.Bottom" Value="{Binding YCoordinateViewModel.Location}"/>
                     <Setter Property="Canvas.Bottom">
                         <Setter.Value>
                             <MultiBinding Converter="{StaticResource MultiParameterBorderConverter}" ConverterParameter="Y">
-                                <Binding Path="YCoordinateViewModel.Location" />
+                                <Binding Path="YCoordinateViewModel.Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
                                 <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
                             </MultiBinding>
                         </Setter.Value>
