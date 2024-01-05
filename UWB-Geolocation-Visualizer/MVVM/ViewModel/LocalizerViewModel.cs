@@ -107,7 +107,13 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
          */
         private void AdjustDialogSite(AnchorViewModel anchorViewModel, double x, double y)
         {
-            //TODO: fix the method due to borderschagnes
+            //getting back to world (px) not map (OXY) coordinates
+            double borderXMin = double.Parse(this.BordersSetterViewModel.XBorderMinViewModel.Location);
+            double borderYMin = double.Parse(this.BordersSetterViewModel.YBorderMinViewModel.Location);
+            x -= borderXMin;
+            y -= borderYMin;
+
+            //calculating dialog site
             if (x <= 0.5 * anchorViewModel.Width)
             {
                 if (y <= 0.5 * anchorViewModel.Height)
