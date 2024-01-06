@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using UWB_Geolocation_Visualizer.Core;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.AnchorView;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow;
@@ -40,9 +39,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             LocalizerViewModel localizerViewModel,
             Action OnRequestUpsertAnchorAction,
             TailSitesEnum tailDialogSite = TailSitesEnum.Left
-            ) : base(displayName)
+            ) : base(displayName, id)
         {
-            Id = id;
             XCoordinateViewModel = new CoordinateViewModel(displayName: "X:");
             YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:");
             anchorDialogViewModel = new AnchorDialogViewModel(displayName: "AddingAnchor", tailDialogSite);

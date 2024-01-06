@@ -13,7 +13,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private string borderBackground = "Transparent";
 
-        public DialogViewModel(string displayName) : base(displayName) { }
+        public DialogViewModel(string displayName, int id) : base(displayName)
+        {
+            Id = id;
+        }
 
         partial void OnVisibilityChanged(string value)
         {

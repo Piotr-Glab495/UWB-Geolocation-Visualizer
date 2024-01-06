@@ -22,7 +22,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private CommandViewModel refreshCommandViewModel;
 
-        public BordersSetterViewModel(string displayName, Action action) : base(displayName)
+        public BordersSetterViewModel(string displayName, Action action) : base(displayName, id: 0)
         {
             xBorderMinViewModel = new CoordinateViewModel(displayName: "xMin:", "-360");
             xBorderMaxViewModel = new CoordinateViewModel(displayName: "xMax:", "360");

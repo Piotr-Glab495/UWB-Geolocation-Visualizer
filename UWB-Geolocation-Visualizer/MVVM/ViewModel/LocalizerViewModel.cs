@@ -67,12 +67,12 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
          */
         public void PrepareAnchorForDisplaying(AnchorViewModel anchorViewModel, bool doFakeCoordinateChange = false)
         {
-            double x = this.ReadProperCoordinateValue(
+            double x = ReadProperCoordinateValue(
                 anchorViewModel.XCoordinateViewModel.Location,
                 this.BordersSetterViewModel.XBorderMinViewModel.Location,
                 this.BordersSetterViewModel.XBorderMaxViewModel.Location
             );
-            double y = this.ReadProperCoordinateValue(
+            double y = ReadProperCoordinateValue(
                 anchorViewModel.YCoordinateViewModel.Location,
                 this.BordersSetterViewModel.YBorderMinViewModel.Location,
                 this.BordersSetterViewModel.YBorderMaxViewModel.Location
@@ -172,7 +172,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
          *  This is a method used to parse the location string to a double, bewaring of possible problems: invalid format, value lower than lower border or higher than higher border.
          * </summary> 
          */
-        private double ReadProperCoordinateValue(string coordinateToRead, string borderMinToRead, string borderMaxToRead)
+        private static double ReadProperCoordinateValue(string coordinateToRead, string borderMinToRead, string borderMaxToRead)
         {
             if (!double.TryParse(coordinateToRead, NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
             {
