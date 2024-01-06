@@ -12,7 +12,7 @@
              >
     <Canvas VerticalAlignment="Center">
         <Polygon 
-            Points="7, -7.5 40, -25 40, 10"
+            Points="7, -34.5 40, -52 40, -17"
             Fill="#3d8693"
             Panel.ZIndex="2"
             Visibility="{Binding Visibility}"
@@ -47,9 +47,9 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" MaxHeight="20"/>
+                        <RowDefinition Height="auto" MaxHeight="30"/>
                         <RowDefinition Height="20" />
-                        <RowDefinition Height="auto" MaxHeight="20"/>
+                        <RowDefinition Height="auto" MaxHeight="30"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
