@@ -20,7 +20,8 @@
             StrokeThickness="1" 
             Visibility="{Binding LocationVisibility}"
             Panel.ZIndex="3"
-            Canvas.Top="-15"
+            Canvas.Top="-7.5"
+            Canvas.Left="-7.5"
         >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using UWB_Geolocation_Visualizer.Core;
 
@@ -110,6 +110,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             //getting back to world (px) not map (OXY) coordinates
             double borderXMin = double.Parse(this.BordersSetterViewModel.XBorderMinViewModel.Location);
             double borderYMin = double.Parse(this.BordersSetterViewModel.YBorderMinViewModel.Location);
+            double borderXMax = double.Parse(this.BordersSetterViewModel.XBorderMaxViewModel.Location);
+            double borderYMax = double.Parse(this.BordersSetterViewModel.YBorderMaxViewModel.Location);
             x -= borderXMin;
             y -= borderYMin;
 
@@ -122,7 +124,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     return;
                 }
 
-                if (y >= (this.Height - 0.5 * anchorViewModel.Height))
+                if (y >= (borderYMax - 0.5 * anchorViewModel.Height))
                 {
                     anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.LeftTopCorner;
                     return;
@@ -132,7 +134,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 return;
             }
 
-            if (x >= (this.Width - 0.5 * anchorViewModel.Width))
+            if (x >= (borderXMax - 0.5 * anchorViewModel.Width))
             {
                 if (y <= 0.5 * anchorViewModel.Height)
                 {
@@ -140,7 +142,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     return;
                 }
 
-                if (y >= (this.Height - 0.5 * anchorViewModel.Height))
+                if (y >= (borderYMax - 0.5 * anchorViewModel.Height))
                 {
                     anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.RightTopCorner;
                     return;
@@ -156,7 +158,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 return;
             }
 
-            if (y >= (this.Height - 0.5 * anchorViewModel.Height))
+            if (y >= (borderYMax - 0.5 * anchorViewModel.Height))
             {
                 anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Bottom;
                 return;
@@ -172,7 +174,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
          */
         private double ReadProperCoordinateValue(string coordinateToRead, string borderMinToRead, string borderMaxToRead)
         {
-            if (!double.TryParse(coordinateToRead, out double value))
+            if (!double.TryParse(coordinateToRead, NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
             {
                 if (!double.TryParse(borderMinToRead, out value))
                 {
