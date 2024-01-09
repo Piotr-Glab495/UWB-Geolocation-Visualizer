@@ -2,5 +2,7 @@
 {
     internal interface ILocationCalculatorBuilder
     {
+        //TODO: develop the whole builder
+        public LocationCalculator GetCalculator();
     }
 }
