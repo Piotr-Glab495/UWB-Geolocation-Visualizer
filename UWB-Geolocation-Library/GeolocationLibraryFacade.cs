@@ -12,11 +12,11 @@ namespace UWB_Geolocation_Library
         {
             if(mode == DataReadingModeEnum.USBMode)
             {
-                this.dataReader = new USBDataReader();
+                dataReader = new USBDataReader();
             } 
             else
             {
-                this.dataReader = new InMemoryDataReader();
+                dataReader = new InMemoryDataReader();
             }
         }
 
