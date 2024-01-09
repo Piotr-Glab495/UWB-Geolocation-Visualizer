@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Windows;
+using UWB_Geolocation_Library.SimpleTypes;
 using UWB_Geolocation_Visualizer.Core;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
@@ -208,6 +210,29 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             {
                 this.PrepareAnchorForDisplaying(anchor, doFakeCoordinateChange: true);
             }
+        }
+
+        public static void LocatingError(string msg)
+        {
+            string messageBoxText = "Wystąpił błąd biblioteki: " + msg + "!";
+            string caption = "Błąd";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Error;
+
+            _ = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+        }
+
+        public PointD[] AnchorsToPointDArray()
+        {
+            PointD[] points = new PointD[Anchors.Count];
+            for(int i = 0; i < Anchors.Count; ++i)
+            {
+                points[i] = new PointD(
+                    x: double.Parse(Anchors[i].XCoordinateViewModel.Location),
+                    y: double.Parse(Anchors[i].YCoordinateViewModel.Location)
+                );
+            }
+            return points;
         }
     }
 }
