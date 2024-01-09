@@ -15,7 +15,7 @@
         <Ellipse
             Width="15"
             Height="15"
-            Fill="#096272" 
+            Fill="{Binding EllipseFill}" 
             Stroke="White"
             StrokeThickness="1" 
             Visibility="{Binding LocationVisibility}"
@@ -89,6 +89,7 @@
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center" 
+                        IsEnabled="{Binding XCoordinateViewModel.IsEditable}"
                         Text="{Binding Path=XCoordinateViewModel.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     />
 
@@ -133,6 +134,7 @@
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center" 
+                        IsEnabled="{Binding YCoordinateViewModel.IsEditable}"
                         Text="{Binding Path=YCoordinateViewModel.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     />
 

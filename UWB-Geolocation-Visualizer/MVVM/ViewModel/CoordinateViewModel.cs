@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Windows.Input;
 using UWB_Geolocation_Visualizer.Core;
 using UWB_Geolocation_Visualizer.MVVM.Model;
 
@@ -9,6 +8,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
     {
         [ObservableProperty]
         private string location;
+
+        [ObservableProperty]
+        private bool isEditable = true;
 
         private readonly RegexValidator previewNumbersOnlyRegexValidator;
 

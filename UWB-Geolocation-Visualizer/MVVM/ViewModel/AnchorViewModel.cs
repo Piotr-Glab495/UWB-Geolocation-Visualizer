@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
+using UWB_Geolocation_Library.SimpleTypes;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.AnchorView;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow;
@@ -17,6 +19,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         [ObservableProperty]
         private int width = 250;
+
+        [ObservableProperty]
+        private string ellipseFill = "#096272";
 
         [ObservableProperty]
         private CoordinateViewModel xCoordinateViewModel;
@@ -57,6 +62,31 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     displayName: "Edytuj kotwicę",
                     command: new ToggleDialogVisibilityCommand(this)
                 );
+        }
+
+        /**
+         * <summary>
+         *  Constructor for localised point setting data apropriately
+         * </summary>
+         */
+        public AnchorViewModel(PointD localisedPoint) : base("Punkt lokalizowany", int.MaxValue)
+        {
+            EllipseFill = "#FF0000";
+            LocationVisibility = "Visible";
+            Visibility = "Collapsed";
+            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X.ToString());
+            XCoordinateViewModel.IsEditable = false;
+            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y.ToString());
+            YCoordinateViewModel.IsEditable = false;
+            anchorDialogViewModel = new AnchorDialogViewModel(displayName: "Punkt lokalizowany", TailSitesEnum.Left);
+            UpsertAnchorCommandViewModel = new CommandViewModel(
+                displayName: "Punkt lokalizowany",
+                command: new RelayCommand(() => { })
+            );
+            ToggleDialogVisibilityCommandViewModel = new CommandViewModel(
+                displayName: "Punkt lokalizowany",
+                command: new ToggleDialogVisibilityCommand(this)
+            );
         }
 
         private void OnRequestUpsertAnchor()

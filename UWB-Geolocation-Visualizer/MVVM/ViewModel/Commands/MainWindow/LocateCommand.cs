@@ -13,14 +13,16 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
         public LocateCommand(LocalizerViewModel localizerViewModel)
         {
             this.localizerViewModel = localizerViewModel;
-            libraryFacade = new GeolocationLibraryFacade(DataReadingModeEnum.TestMode);
+            libraryFacade = new GeolocationLibraryFacade();
         }
 
         public override void Execute(object? parameter)
         {
             try
             {
-                libraryFacade.Locate(localizerViewModel.AnchorsToPointDArray());
+                //TODO: add a while loop on a different thread so the data would load all the way until some button is clicked
+                PointD localisedPoint = libraryFacade.Locate(localizerViewModel.AnchorsToPointDArray());
+                localizerViewModel.UpsertLocalisedAnchor(localisedPoint);
             } 
             catch (Exception ex)
             {
