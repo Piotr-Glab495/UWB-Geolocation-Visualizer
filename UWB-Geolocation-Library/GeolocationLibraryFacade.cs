@@ -1,4 +1,5 @@
 ﻿using UWB_Geolocation_Library.Calculation;
+using UWB_Geolocation_Library.Calculation.Builder;
 using UWB_Geolocation_Library.Communication;
 using UWB_Geolocation_Library.SimpleTypes;
 
@@ -33,8 +34,14 @@ namespace UWB_Geolocation_Library
                 1.5d,
                 0.5d
             };
-            LocationCalculator locationCalculator = LocationCalculator.CreateBuilder().Build();
-            return locationCalculator.CalculateLocation(anchorsLocations, distancesData);
+
+            LocationCalculatorBuilder locationCalculatorBuilder = (LocationCalculatorBuilder)LocationCalculator
+                .CreateBuilder()    //builder instance only from LocationCalculator static method, because it's impossible to get calculator without builder
+                .SetInitialData(anchorsLocations, distancesData)
+                .SetFilteringStrategy(FilterTypeEnum.None, 9);
+
+            LocationCalculator locationCalculator = locationCalculatorBuilder.Build();
+            return locationCalculator.CalculateLocation();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace UWB_Geolocation_Library.Calculation
     {
         private double[]? anchorsX;
         private double[]? anchorsY;
-        private double[]? RealDistances;
+        private double[]? realDistances;
         private IFilterStrategy? filteringStrategy;
 
         private bool isUsingFilter = false;
@@ -20,6 +20,12 @@ namespace UWB_Geolocation_Library.Calculation
         {
             private get { return isUsingFilter; }
             set { isUsingFilter = value; }
+        }
+
+        public IFilterStrategy? FilteringStrategy
+        {
+            private get { return  filteringStrategy; }
+            set { filteringStrategy = value; }
         }
 
         public double[]? AnchorsX
@@ -34,6 +40,12 @@ namespace UWB_Geolocation_Library.Calculation
             set { anchorsX = value; }
         }
 
+        public double[]? RealDistances
+        {
+            private get { return realDistances; }
+            set { realDistances = value; }
+        }
+
         /**
          * <summary>
          * LocationCalculator constructor is private to encourage people to get the instance only with an appropriate builder which can be used only statically from a LocationCalculator,
@@ -41,11 +53,6 @@ namespace UWB_Geolocation_Library.Calculation
          * </summary>
          */
         private LocationCalculator() { }
-
-        public void SetFilteringStrategy(IFilterStrategy? strategy)
-        {
-            filteringStrategy = strategy;
-        }
 
         /**
          * <summary>
@@ -65,20 +72,11 @@ namespace UWB_Geolocation_Library.Calculation
          * Simpler: it's an estimation point distances vs real distances => the difference between those least => got a real location. 
          * </summary> 
          */
-        public PointD CalculateLocation(PointD[] anchors, double[] distances)
+        public PointD CalculateLocation()
         {
-            if(anchors.Length != distances.Length)
+            if(anchorsX!.Length != realDistances!.Length)
             {
                 throw new Exception("Różna ilość kotwic zadeklarowanych i rzeczywistych");
-            }
-            anchorsX ??= new double[anchors.Length];
-            anchorsY ??= new double[anchors.Length];
-            RealDistances = distances;
-            
-            for (int i = 0; i < anchors.Length; ++i)
-            {
-                anchorsX[i] = anchors[i].X;
-                anchorsY[i] = anchors[i].Y;
             }
 
             // base localised point coordinates initialization
@@ -105,7 +103,7 @@ namespace UWB_Geolocation_Library.Calculation
             for (int i = 0; i < anchorsX!.Length; i++)
             {
                 double distanceEstimate = CalculateDistanceEstimate(vector[0], vector[1], anchorsX[i], anchorsY![i]);
-                double distanceError = RealDistances![i] - distanceEstimate;
+                double distanceError = realDistances![i] - distanceEstimate;
                 err += Math.Pow(distanceError, 2);
             }
             return err;

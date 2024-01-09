@@ -5,6 +5,6 @@ namespace UWB_Geolocation_Library.Calculation.Builder
     internal interface ILocationCalculatorBuilder
     {
         public ILocationCalculatorBuilder SetFilteringStrategy(FilterTypeEnum filterType, int filterWidth);
-        public ILocationCalculatorBuilder SetInitialData(double[]? anchorsX, double[]? anchorsY);
+        public ILocationCalculatorBuilder SetInitialData(PointD[] anchors, double[] realDistances);
     }
 }

@@ -25,20 +25,31 @@ namespace UWB_Geolocation_Library.Calculation.Builder
             {
                 case FilterTypeEnum.None:
                 default:
-                    calculator!.SetFilteringStrategy(null);
+                    calculator!.FilteringStrategy = null;
                     calculator!.IsUsingFilter = false;
                     return this;
                 case FilterTypeEnum.SMA:
-                    calculator!.SetFilteringStrategy(new SimpleMovingAverageFilter(filterWidth));
+                    calculator!.FilteringStrategy = new SimpleMovingAverageFilter(filterWidth);
                     calculator!.IsUsingFilter = true;
                     return this;
             }
         }
 
-        public ILocationCalculatorBuilder SetInitialData(double[]? anchorsX, double[]? anchorsY)
+        public ILocationCalculatorBuilder SetInitialData(PointD[] anchors, double[] realDistances)
         {
+            double[] anchorsX = new double[anchors.Length];
+            double[] anchorsY = new double[anchors.Length];
+
+            for (int i = 0; i < anchors.Length; ++i)
+            {
+                anchorsX[i] = anchors[i].X;
+                anchorsY[i] = anchors[i].Y;
+            }
+
             calculator!.AnchorsX = anchorsX;
             calculator!.AnchorsY = anchorsY;
+            calculator!.RealDistances = realDistances;
+
             return this;
         }
 
