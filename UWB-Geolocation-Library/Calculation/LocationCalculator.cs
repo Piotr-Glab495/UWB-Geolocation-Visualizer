@@ -2,6 +2,8 @@
 using MathNet.Numerics.Optimization;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using UWB_Geolocation_Library.Calculation.Filters;
+using UWB_Geolocation_Library.Calculation.Builder;
 
 namespace UWB_Geolocation_Library.Calculation
 {
@@ -10,6 +12,32 @@ namespace UWB_Geolocation_Library.Calculation
         private double[]? anchorsX;
         private double[]? anchorsY;
         private double[]? RealDistances;
+        private IFilterStrategy? filteringStrategy;
+        private bool isUsingFilter = false;
+
+        /**
+         * <summary>
+         * LocationCalculator constructor is private to encourage people to get the instance only with an appropriate builder which can be used only statically from a LocationCalculator,
+         * because it needs its private constructor usage to start.
+         * </summary>
+         */
+        private LocationCalculator() { }
+
+        public void SetFilteringStrategy(IFilterStrategy strategy)
+        {
+            filteringStrategy = strategy;
+        }
+
+        /**
+         * <summary>
+         * Static method used to get an appropriate builder which can be used only statically from a LocationCalculator,
+         * because it needs its private constructor usage to start. All to encourage people to get the calculator instance only with an appropriate builder.
+         * </summary>
+         */
+        public static LocationCalculatorBuilder CreateBuilder()
+        {
+            return new LocationCalculatorBuilder(new LocationCalculator());
+        }
 
         /**
          * <summary>
@@ -41,6 +69,11 @@ namespace UWB_Geolocation_Library.Calculation
             IObjectiveFunction objFunc = ObjectiveFunction.Value(SumOfSquaresOfErrors);
             MinimizationResult minResult = NelderMeadSimplex.Minimum(objectiveFunction: objFunc, initialGuess: initialGuess, convergenceTolerance: 1e-5, maximumIterations: 10000);
             double[] finalCoordinates = minResult.MinimizingPoint.ToArray();
+
+            if(isUsingFilter && filteringStrategy != null)
+            {
+                return filteringStrategy.FilterLocation(new PointD(finalCoordinates[0], finalCoordinates[1]));
+            }
 
             return new PointD(finalCoordinates[0], finalCoordinates[1]);
         }

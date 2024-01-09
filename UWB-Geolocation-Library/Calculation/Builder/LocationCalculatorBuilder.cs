@@ -2,17 +2,24 @@
 {
     internal class LocationCalculatorBuilder : ILocationCalculatorBuilder
     {
-        private LocationCalculator calculator;
+        private readonly LocationCalculator? calculator;
+
+        /**
+         * <summary>
+         * LocationCalculatorBuilder is private, because it needs LocationCalculator private constructor usage to start, so use a LocationCalculator.CreateBuilder() static method.
+         * </summary>
+         */
+        private LocationCalculatorBuilder() { }
 
         //TODO: develop the whole builder
-        public LocationCalculatorBuilder()
+        public LocationCalculatorBuilder(LocationCalculator calculator)
         {
-            this.calculator = new LocationCalculator();
+            this.calculator = calculator;
         }
 
-        public LocationCalculator GetCalculator()
+        public LocationCalculator Build()
         {
-            return calculator;
+            return calculator!;
         }
     }
 }
