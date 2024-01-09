@@ -1,8 +1,10 @@
-﻿namespace UWB_Geolocation_Library.Calculation.Builder
+﻿using UWB_Geolocation_Library.SimpleTypes;
+
+namespace UWB_Geolocation_Library.Calculation.Builder
 {
     internal interface ILocationCalculatorBuilder
     {
-        //TODO: develop the whole builder
-        public LocationCalculator Build();
+        public ILocationCalculatorBuilder SetFilteringStrategy(FilterTypeEnum filterType, int filterWidth);
+        public ILocationCalculatorBuilder SetInitialData(double[]? anchorsX, double[]? anchorsY);
     }
 }

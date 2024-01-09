@@ -8,7 +8,7 @@ namespace UWB_Geolocation_Library
     {
         private readonly IDataReader dataReader;
 
-        public GeolocationLibraryFacade(DataReadingModeEnum mode)
+        public GeolocationLibraryFacade(DataReadingModeEnum mode = DataReadingModeEnum.TestMode)
         {
             if(mode == DataReadingModeEnum.USBMode)
             {
@@ -22,9 +22,10 @@ namespace UWB_Geolocation_Library
 
         public PointD Locate(PointD[] anchorsLocations)
         {
-            //TODO: get data with dataReader and add some loop
-            dataReader.OpenPort();
+            //TODO: get data with dataReader and adjust them for the localizer border size 
+            //dataReader.OpenPort();
             //double[] distancesData = await dataReader.ReadDataAsync();
+            //dataReader.ClosePort();
             double[] distancesData = new double[]
             {
                 3d,

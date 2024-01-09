@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
+using UWB_Geolocation_Library.SimpleTypes;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.AnchorView;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow;
@@ -57,6 +59,23 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     displayName: "Edytuj kotwicę",
                     command: new ToggleDialogVisibilityCommand(this)
                 );
+        }
+
+        public AnchorViewModel(PointD localisedPoint) : base("Punkt lokalizowany", int.MaxValue)
+        {
+            LocationVisibility = "Visible";
+            Visibility = "Collapsed";
+            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X.ToString());
+            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y.ToString());
+            anchorDialogViewModel = new AnchorDialogViewModel(displayName: "Punkt lokalizowany", TailSitesEnum.Left);
+            UpsertAnchorCommandViewModel = new CommandViewModel(
+                displayName: "Punkt lokalizowany",
+                command: new RelayCommand(() => { })
+            );
+            ToggleDialogVisibilityCommandViewModel = new CommandViewModel(
+                displayName: "Punkt lokalizowany",
+                command: new RelayCommand(() => { })
+            );
         }
 
         private void OnRequestUpsertAnchor()

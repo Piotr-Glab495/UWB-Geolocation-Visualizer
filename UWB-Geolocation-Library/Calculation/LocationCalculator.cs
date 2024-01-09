@@ -13,7 +13,26 @@ namespace UWB_Geolocation_Library.Calculation
         private double[]? anchorsY;
         private double[]? RealDistances;
         private IFilterStrategy? filteringStrategy;
+
         private bool isUsingFilter = false;
+
+        public bool IsUsingFilter
+        {
+            private get { return isUsingFilter; }
+            set { isUsingFilter = value; }
+        }
+
+        public double[]? AnchorsX
+        {
+            private get { return anchorsX; }
+            set { anchorsX = value; }
+        }
+
+        public double[]? AnchorsY
+        {
+            private get { return anchorsY; }
+            set { anchorsX = value; }
+        }
 
         /**
          * <summary>
@@ -23,7 +42,7 @@ namespace UWB_Geolocation_Library.Calculation
          */
         private LocationCalculator() { }
 
-        public void SetFilteringStrategy(IFilterStrategy strategy)
+        public void SetFilteringStrategy(IFilterStrategy? strategy)
         {
             filteringStrategy = strategy;
         }
@@ -70,7 +89,7 @@ namespace UWB_Geolocation_Library.Calculation
             MinimizationResult minResult = NelderMeadSimplex.Minimum(objectiveFunction: objFunc, initialGuess: initialGuess, convergenceTolerance: 1e-5, maximumIterations: 10000);
             double[] finalCoordinates = minResult.MinimizingPoint.ToArray();
 
-            if(isUsingFilter && filteringStrategy != null)
+            if(IsUsingFilter && filteringStrategy != null)
             {
                 return filteringStrategy.FilterLocation(new PointD(finalCoordinates[0], finalCoordinates[1]));
             }

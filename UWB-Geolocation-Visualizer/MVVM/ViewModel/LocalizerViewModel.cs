@@ -13,6 +13,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private ObservableCollection<AnchorViewModel> anchors = new();
 
+        private AnchorViewModel? localisedPoint = null;
+
         [ObservableProperty]
         private int width = 720;
 
@@ -25,6 +27,35 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         public LocalizerViewModel(string displayName) : base(displayName) 
         {
             BordersSetterViewModel = new BordersSetterViewModel("Podaj granice obszaru lokalizacji", OnSetBorders);
+        }
+
+        public static void LocatingError(string msg)
+        {
+            string messageBoxText = "Wystąpił błąd biblioteki: " + msg + "!";
+            string caption = "Błąd";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Error;
+
+            _ = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+        }
+
+        public PointD[] AnchorsToPointDArray()
+        {
+            PointD[] points = new PointD[Anchors.Count];
+            for (int i = 0; i < Anchors.Count; ++i)
+            {
+                points[i] = new PointD(
+                    x: double.Parse(Anchors[i].XCoordinateViewModel.Location),
+                    y: double.Parse(Anchors[i].YCoordinateViewModel.Location)
+                );
+            }
+            return points;
+        }
+
+        public void UpsertLocalisedAnchor(PointD point)
+        {
+            AnchorViewModel localisedPointViewModel = new AnchorViewModel(point);
+            UpsertAnchor(localisedPointViewModel);
         }
 
         public void UpsertAnchor(AnchorViewModel anchorViewModel)
@@ -67,17 +98,17 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
          * the site of AnchorView's Ellipse on which the AnchorView's dialog should be then displayed.
          * </summary>
          */
-        public void PrepareAnchorForDisplaying(AnchorViewModel anchorViewModel, bool doFakeCoordinateChange = false)
+        private void PrepareAnchorForDisplaying(AnchorViewModel anchorViewModel, bool doFakeCoordinateChange = false)
         {
             double x = ReadProperCoordinateValue(
                 anchorViewModel.XCoordinateViewModel.Location,
-                this.BordersSetterViewModel.XBorderMinViewModel.Location,
-                this.BordersSetterViewModel.XBorderMaxViewModel.Location
+                BordersSetterViewModel.XBorderMinViewModel.Location,
+                BordersSetterViewModel.XBorderMaxViewModel.Location
             );
             double y = ReadProperCoordinateValue(
                 anchorViewModel.YCoordinateViewModel.Location,
-                this.BordersSetterViewModel.YBorderMinViewModel.Location,
-                this.BordersSetterViewModel.YBorderMaxViewModel.Location
+                BordersSetterViewModel.YBorderMinViewModel.Location,
+                BordersSetterViewModel.YBorderMaxViewModel.Location
             );
 
             //this fake update is used to make anchorView change due to external borders changes
@@ -110,10 +141,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private void AdjustDialogSite(AnchorViewModel anchorViewModel, double x, double y)
         {
             //getting back to world (px) not map (OXY) coordinates
-            double borderXMin = double.Parse(this.BordersSetterViewModel.XBorderMinViewModel.Location);
-            double borderYMin = double.Parse(this.BordersSetterViewModel.YBorderMinViewModel.Location);
-            double borderXMax = double.Parse(this.BordersSetterViewModel.XBorderMaxViewModel.Location);
-            double borderYMax = double.Parse(this.BordersSetterViewModel.YBorderMaxViewModel.Location);
+            double borderXMin = double.Parse(BordersSetterViewModel.XBorderMinViewModel.Location);
+            double borderYMin = double.Parse(BordersSetterViewModel.YBorderMinViewModel.Location);
+            double borderXMax = double.Parse(BordersSetterViewModel.XBorderMaxViewModel.Location);
+            double borderYMax = double.Parse(BordersSetterViewModel.YBorderMaxViewModel.Location);
             x -= borderXMin;
             y -= borderYMin;
 
@@ -208,31 +239,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         {
             foreach(AnchorViewModel anchor in Anchors)
             {
-                this.PrepareAnchorForDisplaying(anchor, doFakeCoordinateChange: true);
+                PrepareAnchorForDisplaying(anchor, doFakeCoordinateChange: true);
             }
-        }
-
-        public static void LocatingError(string msg)
-        {
-            string messageBoxText = "Wystąpił błąd biblioteki: " + msg + "!";
-            string caption = "Błąd";
-            MessageBoxButton button = MessageBoxButton.OK;
-            MessageBoxImage icon = MessageBoxImage.Error;
-
-            _ = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-        }
-
-        public PointD[] AnchorsToPointDArray()
-        {
-            PointD[] points = new PointD[Anchors.Count];
-            for(int i = 0; i < Anchors.Count; ++i)
-            {
-                points[i] = new PointD(
-                    x: double.Parse(Anchors[i].XCoordinateViewModel.Location),
-                    y: double.Parse(Anchors[i].YCoordinateViewModel.Location)
-                );
-            }
-            return points;
         }
     }
 }
