@@ -37,7 +37,7 @@ namespace UWB_Geolocation_Library.Calculation
         public double[]? AnchorsY
         {
             private get { return anchorsY; }
-            set { anchorsX = value; }
+            set { anchorsY = value; }
         }
 
         public double[]? RealDistances

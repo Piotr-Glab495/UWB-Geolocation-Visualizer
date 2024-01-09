@@ -5,6 +5,6 @@ namespace UWB_Geolocation_Library.Calculation.Filters
     internal interface IFilterStrategy
     {
         PointD FilterLocation(PointD location);
-        void SetWindowSize(int windowSize)
+        void SetWindowSize(int windowSize);
     }
 }

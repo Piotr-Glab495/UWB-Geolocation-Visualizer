@@ -29,10 +29,10 @@ namespace UWB_Geolocation_Library
             //dataReader.ClosePort();
             double[] distancesData = new double[]
             {
-                3d,
-                2.5d,
-                1.5d,
-                0.5d
+                100d,
+                100d,
+                100d,
+                100d
             };
 
             LocationCalculatorBuilder locationCalculatorBuilder = (LocationCalculatorBuilder)LocationCalculator

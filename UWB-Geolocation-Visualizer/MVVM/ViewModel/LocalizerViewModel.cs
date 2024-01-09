@@ -13,8 +13,6 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private ObservableCollection<AnchorViewModel> anchors = new();
 
-        private AnchorViewModel? localisedPoint = null;
-
         [ObservableProperty]
         private int width = 720;
 
@@ -54,7 +52,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         public void UpsertLocalisedAnchor(PointD point)
         {
-            AnchorViewModel localisedPointViewModel = new AnchorViewModel(point);
+            //TODO: check if the localisedPointViewModel is considered the same
+            AnchorViewModel localisedPointViewModel = new(point);
             UpsertAnchor(localisedPointViewModel);
         }
 

@@ -21,6 +21,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private int width = 250;
 
         [ObservableProperty]
+        private string ellipseFill = "#096272";
+
+        [ObservableProperty]
         private CoordinateViewModel xCoordinateViewModel;
 
         [ObservableProperty]
@@ -61,12 +64,20 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 );
         }
 
+        /**
+         * <summary>
+         *  Constructor for localised point setting data apropriately
+         * </summary>
+         */
         public AnchorViewModel(PointD localisedPoint) : base("Punkt lokalizowany", int.MaxValue)
         {
+            EllipseFill = "#FF0000";
             LocationVisibility = "Visible";
             Visibility = "Collapsed";
             XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X.ToString());
+            XCoordinateViewModel.IsEditable = false;
             YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y.ToString());
+            YCoordinateViewModel.IsEditable = false;
             anchorDialogViewModel = new AnchorDialogViewModel(displayName: "Punkt lokalizowany", TailSitesEnum.Left);
             UpsertAnchorCommandViewModel = new CommandViewModel(
                 displayName: "Punkt lokalizowany",
@@ -74,7 +85,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             );
             ToggleDialogVisibilityCommandViewModel = new CommandViewModel(
                 displayName: "Punkt lokalizowany",
-                command: new RelayCommand(() => { })
+                command: new ToggleDialogVisibilityCommand(this)
             );
         }
 
