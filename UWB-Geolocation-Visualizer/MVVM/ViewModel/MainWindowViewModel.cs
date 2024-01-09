@@ -63,6 +63,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                         command: new ToggleDialogVisibilityCommand(localizerViewModel.BordersSetterViewModel)
                     ),
                 new CommandViewModel(
+                        displayName: "Lokalizuj",
+                        command: new LocateCommand(localizerViewModel)
+                    ),
+                new CommandViewModel(
                         displayName: "Zakończ",
                         command: new CloseCommand( () => { System.Windows.Application.Current.Shutdown(); } )
                     )
