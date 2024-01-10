@@ -21,14 +21,11 @@ namespace UWB_Geolocation_Library
             }
         }
 
-        public async Task<PointD> Locate(PointD[] anchorsLocations)
+        public PointD Locate(PointD[] anchorsLocations)
         {
             //TODO: maybe i need an adjustement here for the data due to the localizer border size ??
             dataReader.OpenPort();
-            double[] distancesData = new double[anchorsLocations.Length];
-            await Task.Run(async () => {
-                distancesData = await dataReader.ReadDataAsync() ?? new double[anchorsLocations.Length];
-            });
+            double[] distancesData = dataReader.ReadData() ?? new double[anchorsLocations.Length];
             dataReader.ClosePort();
 
             LocationCalculatorBuilder locationCalculatorBuilder = (LocationCalculatorBuilder)LocationCalculator

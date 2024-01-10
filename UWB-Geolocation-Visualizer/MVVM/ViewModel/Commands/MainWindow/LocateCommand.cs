@@ -26,6 +26,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
                 Dispatcher d = Dispatcher.CurrentDispatcher;
                 try
                 {
+                    //while() zmienna z widoku jeśli kliknięto stop to ubijamy wątek
                     PointD localisedPoint = await libraryFacade.Locate(localizerViewModel.AnchorsToPointDArray());
                     d.Invoke(() => {
                         localizerViewModel.UpsertLocalisedAnchor(localisedPoint);    //ehh after adding data readers with awaits and async reading this UI isn't updating even from inside of the dispatcher

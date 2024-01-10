@@ -5,12 +5,10 @@ namespace UWB_Geolocation_Library.Communication
     internal class USBDataReader : IDataReader
     {
         private readonly SerialPort serialPort;
-        private TaskCompletionSource<double[]> dataReceivedTaskCompletionSource;
 
         public USBDataReader(string portName, int baudRate)
         {
             serialPort = new SerialPort(portName, baudRate);
-            dataReceivedTaskCompletionSource = new TaskCompletionSource<double[]>();
         }
 
         public void ClosePort()
@@ -26,38 +24,20 @@ namespace UWB_Geolocation_Library.Communication
             serialPort.Open();
         }
 
-        public async Task<double[]?> ReadDataAsync()
+        public double[]? ReadData()
         {
-            dataReceivedTaskCompletionSource = new TaskCompletionSource<double[]>();
-
             if (serialPort.IsOpen)
             {
-                //TODO: how to get the correct vector?
-                serialPort.BaseStream.BeginRead(new byte[1024], 0, 1024, DataReadCallback, null);
-                return await dataReceivedTaskCompletionSource.Task;
-            }
-
-            return null;
-        }
-
-        private void DataReadCallback(IAsyncResult result)
-        {
-            try
-            {
-                int bytesRead = serialPort.BaseStream.EndRead(result);
-
-                if (bytesRead > 0) //TODO: think about the size
+                int bytesRead = serialPort.BaseStream.Read(new byte[1024], 0, 1024);    //TODO: check the vector size
+                if (bytesRead > 0)
                 {
                     string data = serialPort.ReadExisting();
                     double[] distances = ParseData(data);
-
-                    dataReceivedTaskCompletionSource.SetResult(distances);
+                    return distances;
                 }
             }
-            catch (Exception ex)
-            {
-                dataReceivedTaskCompletionSource.SetException(ex);
-            }
+
+            throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");
         }
 
         /**
@@ -74,14 +54,13 @@ namespace UWB_Geolocation_Library.Communication
             for (int i = 0; i < tokens.Length; ++i)
             {
                 string[] subTokens = tokens[i].Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-                if (double.TryParse(subTokens[1], out double distance))
+                if (double.TryParse(subTokens[i], out double distance))
                 {
                     distances[i] = distance;
                 }
                 else
                 {
-                    // TODO: Handle parsing error
-                    distances[i] = 0.0d;
+                    throw new Exception("Błąd parsowania danych " + subTokens[i] + " na typ double ");
                 }
             }
 

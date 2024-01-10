@@ -14,24 +14,20 @@
             isOpen = true;
         }
 
-        public async Task<double[]?> ReadDataAsync()
+        public double[]? ReadData()
         {
             if(isOpen)
             {
-                double[] distances = new double[4]
+                return new double[4]
                 {
                     100d,
                     100d,
                     100d,
                     100d
                 };
+            }
 
-                return await Task.FromResult<double[]?>(distances);
-            }
-            else
-            {
-                return await Task.FromResult<double[]?>(null);
-            }
+            throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");
         }
     }
 }
