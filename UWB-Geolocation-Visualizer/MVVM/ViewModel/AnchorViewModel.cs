@@ -74,10 +74,14 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             EllipseFill = "#FF0000";
             LocationVisibility = "Visible";
             Visibility = "Collapsed";
-            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X.ToString());
-            XCoordinateViewModel.IsEditable = false;
-            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y.ToString());
-            YCoordinateViewModel.IsEditable = false;
+            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X.ToString())
+            {
+                IsEditable = false
+            };
+            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y.ToString())
+            {
+                IsEditable = false
+            };
             anchorDialogViewModel = new AnchorDialogViewModel(displayName: "Punkt lokalizowany", TailSitesEnum.Left);
             UpsertAnchorCommandViewModel = new CommandViewModel(
                 displayName: "Punkt lokalizowany",

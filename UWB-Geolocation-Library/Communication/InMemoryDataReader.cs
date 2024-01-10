@@ -2,19 +2,36 @@
 {
     internal class InMemoryDataReader : IDataReader
     {
+        private bool isOpen;
+
         public void ClosePort()
         {
-            throw new NotImplementedException();
+            isOpen = false;
         }
 
         public void OpenPort()
         {
-            throw new NotImplementedException();
+            isOpen = true;
         }
 
-        public Task<double[]> ReadDataAsync()
+        public async Task<double[]?> ReadDataAsync()
         {
-            throw new NotImplementedException();
+            if(isOpen)
+            {
+                double[] distances = new double[4]
+                {
+                    100d,
+                    100d,
+                    100d,
+                    100d
+                };
+
+                return await Task.FromResult<double[]?>(distances);
+            }
+            else
+            {
+                return await Task.FromResult<double[]?>(null);
+            }
         }
     }
 }

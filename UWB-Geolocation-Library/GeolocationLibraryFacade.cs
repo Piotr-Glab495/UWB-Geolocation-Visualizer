@@ -13,7 +13,7 @@ namespace UWB_Geolocation_Library
         {
             if(mode == DataReadingModeEnum.USBMode)
             {
-                dataReader = new USBDataReader();
+                dataReader = new USBDataReader("COM3", 9600); //TODO: think about those
             } 
             else
             {
@@ -21,19 +21,15 @@ namespace UWB_Geolocation_Library
             }
         }
 
-        public PointD Locate(PointD[] anchorsLocations)
+        public async Task<PointD> Locate(PointD[] anchorsLocations)
         {
-            //TODO: get data with dataReader and adjust them for the localizer border size 
-            //dataReader.OpenPort();
-            //double[] distancesData = await dataReader.ReadDataAsync();
-            //dataReader.ClosePort();
-            double[] distancesData = new double[]
-            {
-                100d,
-                100d,
-                100d,
-                100d
-            };
+            //TODO: maybe i need an adjustement here for the data due to the localizer border size ??
+            dataReader.OpenPort();
+            double[] distancesData = new double[anchorsLocations.Length];
+            await Task.Run(async () => {
+                distancesData = await dataReader.ReadDataAsync() ?? new double[anchorsLocations.Length];
+            });
+            dataReader.ClosePort();
 
             LocationCalculatorBuilder locationCalculatorBuilder = (LocationCalculatorBuilder)LocationCalculator
                 .CreateBuilder()    //builder instance only from LocationCalculator static method, because it's impossible to get calculator without builder
