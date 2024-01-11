@@ -24,10 +24,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         public BordersSetterViewModel(string displayName, Action action) : base(displayName, id: 0)
         {
-            xBorderMinViewModel = new CoordinateViewModel(displayName: "xMin:", "-360");
-            xBorderMaxViewModel = new CoordinateViewModel(displayName: "xMax:", "360");
-            yBorderMinViewModel = new CoordinateViewModel(displayName: "yMin:", "-300");
-            yBorderMaxViewModel = new CoordinateViewModel(displayName: "yMax:", "300");
+            xBorderMinViewModel = new CoordinateViewModel(displayName: "xMin:", "-5000");
+            xBorderMaxViewModel = new CoordinateViewModel(displayName: "xMax:", "5000");
+            yBorderMinViewModel = new CoordinateViewModel(displayName: "yMin:", "-5000");
+            yBorderMaxViewModel = new CoordinateViewModel(displayName: "yMax:", "5000");
             RefreshCommandViewModel = new CommandViewModel(
                 displayName: "Odśwież obszar lokalizacji",
                 command: new RefreshLocalizerViewCommand(this, action)

@@ -74,14 +74,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             EllipseFill = "#FF0000";
             LocationVisibility = "Visible";
             Visibility = "Collapsed";
-            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X)
-            {
-                IsEditable = false
-            };
-            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y)
-            {
-                IsEditable = false
-            };
+            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X, isEditable: false);
+            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y, isEditable: false);
             anchorDialogViewModel = new AnchorDialogViewModel(displayName: "Punkt lokalizowany", TailSitesEnum.Left);
             UpsertAnchorCommandViewModel = new CommandViewModel(
                 displayName: "Punkt lokalizowany",

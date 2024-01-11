@@ -35,9 +35,12 @@ namespace UWB_Geolocation_Library.Communication
                     double[] distances = ParseData(data);
                     return distances;
                 }
+                return null;
             }
-
-            throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");
+            else
+            {
+                throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");
+            }
         }
 
         /**

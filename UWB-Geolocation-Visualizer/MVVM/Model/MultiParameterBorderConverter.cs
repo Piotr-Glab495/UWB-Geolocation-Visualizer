@@ -37,7 +37,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.Model
                 }
             }
 
-            if (!double.TryParse((string)values[0], out double coordinate))
+            if (!double.TryParse((string)values[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double coordinate))
             {
                 coordinate = borderMin;
             }

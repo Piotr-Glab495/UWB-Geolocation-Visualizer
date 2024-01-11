@@ -84,7 +84,7 @@ namespace UWB_Geolocation_Library.Calculation
 
             // NelderMeadSimplex implementation using least squares method to minimize
             IObjectiveFunction objFunc = ObjectiveFunction.Value(SumOfSquaresOfErrors);
-            MinimizationResult minResult = NelderMeadSimplex.Minimum(objectiveFunction: objFunc, initialGuess: initialGuess, convergenceTolerance: 1e-5, maximumIterations: 10000);
+            MinimizationResult minResult = NelderMeadSimplex.Minimum(objectiveFunction: objFunc, initialGuess: initialGuess, convergenceTolerance: 1e-10, maximumIterations: 10000);
             double[] finalCoordinates = minResult.MinimizingPoint.ToArray();
 
             if(IsUsingFilter && filteringStrategy != null)
