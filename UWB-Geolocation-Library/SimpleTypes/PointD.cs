@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Drawing;
-
-namespace UWB_Geolocation_Library.SimpleTypes
+﻿namespace UWB_Geolocation_Library.SimpleTypes
 {
     public class PointD : IEquatable<PointD> 
     {
@@ -63,7 +60,5 @@ namespace UWB_Geolocation_Library.SimpleTypes
         {
             return x == 0 && y == 0;
         }
-
-        
     }
 }
