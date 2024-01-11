@@ -13,7 +13,7 @@ namespace UWB_Geolocation_Library
         {
             if(mode == DataReadingModeEnum.USBMode)
             {
-                dataReader = new USBDataReader();
+                dataReader = new USBDataReader("COM3", 9600); //TODO: think about those
             } 
             else
             {
@@ -23,17 +23,9 @@ namespace UWB_Geolocation_Library
 
         public PointD Locate(PointD[] anchorsLocations)
         {
-            //TODO: get data with dataReader and adjust them for the localizer border size 
-            //dataReader.OpenPort();
-            //double[] distancesData = await dataReader.ReadDataAsync();
-            //dataReader.ClosePort();
-            double[] distancesData = new double[]
-            {
-                100d,
-                100d,
-                100d,
-                100d
-            };
+            dataReader.OpenPort();
+            double[] distancesData = dataReader.ReadData() ?? new double[anchorsLocations.Length];
+            dataReader.ClosePort();
 
             LocationCalculatorBuilder locationCalculatorBuilder = (LocationCalculatorBuilder)LocationCalculator
                 .CreateBuilder()    //builder instance only from LocationCalculator static method, because it's impossible to get calculator without builder
@@ -42,6 +34,11 @@ namespace UWB_Geolocation_Library
 
             LocationCalculator locationCalculator = locationCalculatorBuilder.Build();
             return locationCalculator.CalculateLocation();
+        }
+
+        public void ClosePort()
+        {
+            dataReader?.ClosePort();
         }
     }
 }

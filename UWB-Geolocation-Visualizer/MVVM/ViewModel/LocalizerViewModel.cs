@@ -22,6 +22,8 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private BordersSetterViewModel bordersSetterViewModel;
 
+        private bool didLocalisePoint = false;
+
         public LocalizerViewModel(string displayName) : base(displayName) 
         {
             BordersSetterViewModel = new BordersSetterViewModel("Podaj granice obszaru lokalizacji", OnSetBorders);
@@ -39,12 +41,14 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         public PointD[] AnchorsToPointDArray()
         {
-            PointD[] points = new PointD[Anchors.Count];
-            for (int i = 0; i < Anchors.Count; ++i)
+            int count = didLocalisePoint ? Anchors.Count : Anchors.Count - 1;
+            PointD[] points = new PointD[count];
+            var anchorsWithoutLocalised = Anchors.Where(a => a.Id != int.MaxValue).ToArray();
+            for (int i = 0; i < count; ++i)
             {
                 points[i] = new PointD(
-                    x: double.Parse(Anchors[i].XCoordinateViewModel.Location),
-                    y: double.Parse(Anchors[i].YCoordinateViewModel.Location)
+                    x: double.Parse(anchorsWithoutLocalised[i].XCoordinateViewModel.Location),
+                    y: double.Parse(anchorsWithoutLocalised[i].YCoordinateViewModel.Location)
                 );
             }
             return points;
@@ -55,6 +59,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             //TODO: check if the localisedPointViewModel is considered the same
             AnchorViewModel localisedPointViewModel = new(point);
             UpsertAnchor(localisedPointViewModel);
+            didLocalisePoint = true;
         }
 
         public void UpsertAnchor(AnchorViewModel anchorViewModel)
