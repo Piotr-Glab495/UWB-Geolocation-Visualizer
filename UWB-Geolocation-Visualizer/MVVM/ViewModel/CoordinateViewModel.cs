@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Globalization;
 using UWB_Geolocation_Visualizer.Core;
 using UWB_Geolocation_Visualizer.MVVM.Model;
 
@@ -17,20 +18,21 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         public CoordinateViewModel(string displayName) : base(displayName)
         {
-            previewNumbersOnlyRegexValidator = new RegexValidator("[^-.,0-9]*");
+            previewNumbersOnlyRegexValidator = new RegexValidator("[^-.0-9]*");
             Location = "";
         }
 
         public CoordinateViewModel(string displayName, string location) : base(displayName)
         {
-            previewNumbersOnlyRegexValidator = new RegexValidator("[^-.,0-9]*");
+            previewNumbersOnlyRegexValidator = new RegexValidator("[^-.0-9]*");
             Location = location;
         }
 
-        public CoordinateViewModel(string displayName, double location) : base(displayName)
+        public CoordinateViewModel(string displayName, double location, bool isEditable = true) : base(displayName)
         {
-            previewNumbersOnlyRegexValidator = new RegexValidator("[^-.,0-9]*");
+            previewNumbersOnlyRegexValidator = new RegexValidator("[^-.0-9]*");
             Location = FormatDouble(location);
+            IsEditable = isEditable;
         }
 
         partial void OnLocationChanged(string value)
@@ -45,7 +47,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 }
                 double validatedFirst = double.Parse(previewNumbersOnlyRegexValidator.Validate(tmp[0]));
                 double validatedSecond = double.Parse(previewNumbersOnlyRegexValidator.Validate(tmp[1]));
-                this.Location = Math.Pow(validatedFirst, validatedSecond).ToString();
+                this.Location = Math.Pow(validatedFirst, validatedSecond).ToString("F2", CultureInfo.InvariantCulture);
                 return;
             }
             string validatedValue = previewNumbersOnlyRegexValidator.Validate(value);
@@ -55,11 +57,11 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             }
         }
 
-        private string FormatDouble(double value)
+        private static string FormatDouble(double value)
         {
-            int decimalPlaces = 10;
-            string formatted = string.Format("{0:F" + decimalPlaces + "}", value);
-            formatted = formatted.TrimEnd('0').TrimEnd('.').TrimEnd(',');
+            int decimalPlaces = 2;
+            string formatted = string.Format(CultureInfo.InvariantCulture, "{0:F" + decimalPlaces + "}", value);
+            formatted = formatted.TrimEnd('0').TrimEnd('.');
 
             return formatted;
         }
