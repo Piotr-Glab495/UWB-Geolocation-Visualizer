@@ -42,6 +42,22 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private ObservableCollection<CommandViewModel> commands;
 
+        /**
+         *<summary>
+         * Observable CommandViewModel to be displayed on the left side of the MainWindow as clickable object
+         *</summary>
+         */
+        [ObservableProperty]
+        private CommandViewModel locateCommand;
+
+        /**
+         *<summary>
+         * Observable CommandViewModel to be displayed on the left side of the MainWindow as clickable object
+         *</summary>
+         */
+        [ObservableProperty]
+        private CommandViewModel stopLocateCommand;
+
         public MainWindowViewModel() : base(displayName: "UWB Geolocation Visualizer")
         {
             localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
@@ -60,17 +76,23 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     ),
                 new CommandViewModel(
                         displayName: "Edytuj obszar lokalizacji",
-                        command: new ToggleDialogVisibilityCommand(localizerViewModel.BordersSetterViewModel)
-                    ),
-                new CommandViewModel(
-                        displayName: "Lokalizuj",
-                        command: new LocateCommand(localizerViewModel)
+                        command: new ToggleDialogVisibilityCommand(LocalizerViewModel.BordersSetterViewModel)
                     ),
                 new CommandViewModel(
                         displayName: "Zakończ",
                         command: new CloseCommand( () => { System.Windows.Application.Current.Shutdown(); } )
                     )
             };
+
+            LocateCommand = new CommandViewModel(
+                displayName: "Lokalizuj",
+                command: new LocateCommand(LocalizerViewModel)
+            );
+
+            StopLocateCommand = new CommandViewModel(
+                displayName: "Zatrzymaj lokalizację",
+                command: new StopLocateCommand(LocalizerViewModel)
+            );
             CurrentView = localizerViewModel;
         }
 

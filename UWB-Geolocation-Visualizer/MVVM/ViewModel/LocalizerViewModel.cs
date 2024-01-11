@@ -24,6 +24,12 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         private bool didLocalisePoint = false;
 
+        [ObservableProperty]
+        private bool isStopButtonEnabled = false;
+
+        [ObservableProperty]
+        private bool isLocaliseButtonEnabled = true;
+
         public LocalizerViewModel(string displayName) : base(displayName) 
         {
             BordersSetterViewModel = new BordersSetterViewModel("Podaj granice obszaru lokalizacji", OnSetBorders);
@@ -41,14 +47,14 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         public PointD[] AnchorsToPointDArray()
         {
-            int count = didLocalisePoint ? Anchors.Count : Anchors.Count - 1;
+            int count = didLocalisePoint ? Anchors.Count - 1 : Anchors.Count;
             PointD[] points = new PointD[count];
             var anchorsWithoutLocalised = Anchors.Where(a => a.Id != int.MaxValue).ToArray();
             for (int i = 0; i < count; ++i)
             {
                 points[i] = new PointD(
-                    x: double.Parse(anchorsWithoutLocalised[i].XCoordinateViewModel.Location),
-                    y: double.Parse(anchorsWithoutLocalised[i].YCoordinateViewModel.Location)
+                    x: double.Parse(anchorsWithoutLocalised[i].XCoordinateViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture),
+                    y: double.Parse(anchorsWithoutLocalised[i].YCoordinateViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture)
                 );
             }
             return points;
@@ -56,7 +62,6 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         public void UpsertLocalisedAnchor(PointD point)
         {
-            //TODO: check if the localisedPointViewModel is considered the same
             AnchorViewModel localisedPointViewModel = new(point);
             UpsertAnchor(localisedPointViewModel);
             didLocalisePoint = true;
@@ -83,8 +88,12 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             {
                 if(anchor.Equals(anchorViewModel))
                 {
-                    anchor.XCoordinateViewModel = anchorViewModel.XCoordinateViewModel;
-                    anchor.YCoordinateViewModel = anchorViewModel.YCoordinateViewModel;
+                    anchor.XCoordinateViewModel.DisplayName = anchorViewModel.XCoordinateViewModel.DisplayName;
+                    anchor.XCoordinateViewModel.Location = anchorViewModel.XCoordinateViewModel.Location;
+                    anchor.XCoordinateViewModel.IsEditable = anchorViewModel.XCoordinateViewModel.IsEditable;
+                    anchor.YCoordinateViewModel.DisplayName = anchorViewModel.YCoordinateViewModel.DisplayName;
+                    anchor.YCoordinateViewModel.Location = anchorViewModel.YCoordinateViewModel.Location;
+                    anchor.YCoordinateViewModel.IsEditable = anchorViewModel.YCoordinateViewModel.IsEditable;
                     anchor.UpsertAnchorCommandViewModel = anchorViewModel.UpsertAnchorCommandViewModel;
                     anchor.AnchorDialogViewModel = anchorViewModel.AnchorDialogViewModel;
                     anchor.DisplayName = anchorViewModel.DisplayName;
@@ -119,19 +128,19 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             if (doFakeCoordinateChange)
             {
                 x += 1.0;
-                anchorViewModel.XCoordinateViewModel.Location = x.ToString();
+                anchorViewModel.XCoordinateViewModel.Location = x.ToString("F2", CultureInfo.InvariantCulture);
                 x -= 1.0;
-                anchorViewModel.XCoordinateViewModel.Location = x.ToString();
+                anchorViewModel.XCoordinateViewModel.Location = x.ToString("F2", CultureInfo.InvariantCulture);
                 y += 1.0;
-                anchorViewModel.YCoordinateViewModel.Location = y.ToString();
+                anchorViewModel.YCoordinateViewModel.Location = y.ToString("F2", CultureInfo.InvariantCulture);
                 y -= 1.0;
-                anchorViewModel.YCoordinateViewModel.Location = y.ToString();
+                anchorViewModel.YCoordinateViewModel.Location = y.ToString("F2", CultureInfo.InvariantCulture);
             } 
             else
             {
                 //this is to ensure a correct double value is assigned to the property currently
-                anchorViewModel.XCoordinateViewModel.Location = x.ToString();
-                anchorViewModel.YCoordinateViewModel.Location = y.ToString();
+                anchorViewModel.XCoordinateViewModel.Location = x.ToString("F2", CultureInfo.InvariantCulture);
+                anchorViewModel.YCoordinateViewModel.Location = y.ToString("F2", CultureInfo.InvariantCulture);
             }
 
             this.AdjustDialogSite(anchorViewModel, x, y);

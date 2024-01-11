@@ -44,10 +44,35 @@
             <StackPanel Grid.Row="1" Panel.ZIndex="1">
                 <ItemsControl
                     x:Name="CommandsControl"
-                    Grid.Row="2"
-                    Grid.Column="1"
                     ItemsSource="{Binding Commands, UpdateSourceTrigger=PropertyChanged}"
                     ItemTemplate="{StaticResource CommandsTemplate}"
+                    />
+
+                <Button
+                    Content="{Binding LocateCommand.DisplayName}"
+                    Name="LocateButton"
+                    Width="150"
+                    Height="25"
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Cursor="Hand"
+                    Background="DarkSlateGray"
+                    IsEnabled="{Binding Path=LocalizerViewModel.IsLocaliseButtonEnabled}"
+                    Command="{Binding LocateCommand.Command}"
+                />
+
+                <Button
+                    Content="{Binding StopLocateCommand.DisplayName}"
+                    Name="StopLocateButton"
+                    Width="150"
+                    Height="25"
+                    Margin="0, 20, 0, 0"
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Cursor="Hand"
+                    Background="DarkSlateGray"
+                    IsEnabled="{Binding Path=LocalizerViewModel.IsStopButtonEnabled}"
+                    Command="{Binding StopLocateCommand.Command}"
                     />
             </StackPanel>
 

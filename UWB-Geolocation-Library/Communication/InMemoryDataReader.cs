@@ -44,9 +44,10 @@
                         seedData[i] += new Random().Next(-10, 11);
                     }
                 }
+                return seedData;
+            } else { 
+                throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");
             }
-
-            throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");
         }
     }
 }
