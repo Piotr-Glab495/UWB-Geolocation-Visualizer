@@ -2,7 +2,20 @@
 {
     internal class InMemoryDataReader : IDataReader
     {
-        private bool isOpen;
+        private bool isOpen = false;
+
+        private static double[] seedData;
+
+        static InMemoryDataReader()
+        {
+            seedData = new double[4]
+            {
+                100d,
+                100d,
+                100d,
+                100d
+            };
+        }
 
         public void ClosePort()
         {
@@ -18,13 +31,19 @@
         {
             if(isOpen)
             {
-                return new double[4]
+                int directionFirst = new Random().Next(0, seedData.Length);
+                int directionSecond = new Random().Next(0, seedData.Length);
+                for(int i = 0; i < seedData.Length; ++i)
                 {
-                    100d,
-                    100d,
-                    100d,
-                    100d
-                };
+                    if(i == directionFirst)
+                    {
+                        seedData[i] += new Random().Next(-10, 11);
+                    }
+                    if (i == directionSecond)
+                    {
+                        seedData[i] += new Random().Next(-10, 11);
+                    }
+                }
             }
 
             throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");

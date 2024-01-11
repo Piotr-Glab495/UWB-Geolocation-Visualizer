@@ -20,20 +20,21 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
 
         public override void Execute(object? parameter)
         {
-                //TODO: add a while loop so the data would load all the way until some button is clicked
-            _ = Task.Run(async () =>
+            //TODO: add a while loop so the data would load all the way until some button is clicked
+            Dispatcher d = Dispatcher.CurrentDispatcher;
+            _ = Task.Run(() =>
             {
-                Dispatcher d = Dispatcher.CurrentDispatcher;
                 try
                 {
                     //while() zmienna z widoku jeśli kliknięto stop to ubijamy wątek
-                    PointD localisedPoint = await libraryFacade.Locate(localizerViewModel.AnchorsToPointDArray());
+                    PointD localisedPoint = libraryFacade.Locate(localizerViewModel.AnchorsToPointDArray());
                     d.Invoke(() => {
                         localizerViewModel.UpsertLocalisedAnchor(localisedPoint);    //ehh after adding data readers with awaits and async reading this UI isn't updating even from inside of the dispatcher
                     });
                 } 
                 catch (Exception ex)
                 {
+                    libraryFacade.ClosePort();
                     d.Invoke(() => { LocalizerViewModel.LocatingError(ex.Message); });  //And this one is ok
                 } 
                 

@@ -23,7 +23,6 @@ namespace UWB_Geolocation_Library
 
         public PointD Locate(PointD[] anchorsLocations)
         {
-            //TODO: maybe i need an adjustement here for the data due to the localizer border size ??
             dataReader.OpenPort();
             double[] distancesData = dataReader.ReadData() ?? new double[anchorsLocations.Length];
             dataReader.ClosePort();
@@ -35,6 +34,11 @@ namespace UWB_Geolocation_Library
 
             LocationCalculator locationCalculator = locationCalculatorBuilder.Build();
             return locationCalculator.CalculateLocation();
+        }
+
+        public void ClosePort()
+        {
+            dataReader?.ClosePort();
         }
     }
 }

@@ -74,11 +74,11 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             EllipseFill = "#FF0000";
             LocationVisibility = "Visible";
             Visibility = "Collapsed";
-            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X.ToString())
+            XCoordinateViewModel = new CoordinateViewModel(displayName: "X:", location: localisedPoint.X)
             {
                 IsEditable = false
             };
-            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y.ToString())
+            YCoordinateViewModel = new CoordinateViewModel(displayName: "Y:", location: localisedPoint.Y)
             {
                 IsEditable = false
             };
