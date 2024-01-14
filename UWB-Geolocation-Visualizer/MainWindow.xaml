@@ -46,7 +46,159 @@
                     x:Name="CommandsControl"
                     ItemsSource="{Binding Commands, UpdateSourceTrigger=PropertyChanged}"
                     ItemTemplate="{StaticResource CommandsTemplate}"
+                />
+
+                <TextBlock
+                    Text="Tryb działania programu:"
+                    Foreground="White"
+                    FontSize="16"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10" />
+
+                <StackPanel Orientation="Horizontal" >
+                    <RadioButton 
+                        Name="TestModeRadio"
+                        HorizontalAlignment="Left"
+                        Margin="50, 0, 75, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsTestModeEnabled, UpdateSourceTrigger=PropertyChanged}"
                     />
+
+                    <RadioButton 
+                        Name="DeviceModeRadio" 
+                        HorizontalAlignment="Left"
+                        Margin="0, 0, 0, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsDeviceModeEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock 
+                        Text="Testowy"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="28, 0, 20, 20"
+                    />
+
+                    <TextBlock 
+                        Text="Z urządzeniem"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,20"
+                    />
+                </StackPanel>
+
+                <TextBlock
+                    Text="Filtrowanie:"
+                    Foreground="White"
+                    FontSize="16"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10" />
+
+                <StackPanel Orientation="Horizontal" >
+                    <RadioButton 
+                        Name="FilterNoneRadio"
+                        HorizontalAlignment="Left"
+                        Margin="50, 0, 75, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsFilteringNoneEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    />
+                    <!-- maybe it's possible to set the filter type enum with binding !-->
+
+                    <RadioButton 
+                        Name="FilterSMARadio" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsFilteringSMAEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    />
+                        <!-- maybe it's possible to set the filter type enum with binding !-->
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock 
+                        Text="Brak"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="43, 0, 60, 10"
+                    />
+
+                    <TextBlock 
+                        Text="SMA"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,10"
+                    />
+                </StackPanel>
+
+                <TextBox
+                    HorizontalAlignment="Center"
+                    Background="#353340"
+                    Width="160"
+                    VerticalAlignment="Top"
+                    Height="20"
+                    FontSize="15"
+                    Margin="0, 0, 0, 5"
+                    Foreground="DarkGray"
+                    TextAlignment="Center"
+                    Name="FilterWindowSizeValueBox"
+                    IsEnabled="{Binding IsFilteringSMAEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding FilterWindowSize, UpdateSourceTrigger=PropertyChanged}"
+                />
+
+                <TextBlock 
+                    Text="Szerokość okna filtru"
+                    Foreground="White"
+                    FontSize="15"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20"
+                />
+
+                <TextBlock
+                    Text="Logowanie danych:"
+                    Foreground="White"
+                    FontSize="16"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10" />
+
+                <StackPanel Orientation="Horizontal" >
+                    <CheckBox 
+                        Name="LogInputDataCheckbox"
+                        HorizontalAlignment="Left"
+                        Margin="50, 0, 75, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsInputDataLogEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    />
+
+                    <CheckBox 
+                        Name="LogOutputDataCheckbox" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsOutputDataLogEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock 
+                        Text="Wejściowych"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="15, 0, 10, 10"
+                    />
+
+                    <TextBlock 
+                        Text="Wyjściowych"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,10"
+                    />
+                </StackPanel>
 
                 <Button
                     Content="{Binding LocateCommand.DisplayName}"
