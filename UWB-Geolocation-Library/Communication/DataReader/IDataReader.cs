@@ -1,4 +1,4 @@
-﻿namespace UWB_Geolocation_Library.Communication
+﻿namespace UWB_Geolocation_Library.Communication.DataReader
 {
     internal interface IDataReader
     {
