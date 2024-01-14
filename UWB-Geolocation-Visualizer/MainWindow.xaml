@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:UWB_Geolocation_Visualizer.MVVM.ViewModel"
+        xmlns:simpleTypes="clr-namespace:UWB_Geolocation_Library.SimpleTypes;assembly=UWB-Geolocation-Library"
         mc:Ignorable="d"
         Height="675" Width="920"
         WindowStyle="None"
@@ -61,7 +62,10 @@
                         HorizontalAlignment="Left"
                         Margin="50, 0, 75, 0"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding IsTestModeEnabled, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding CurrentDataReadingMode, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:DataReadingModeEnum.TestMode}, 
+                            UpdateSourceTrigger=PropertyChanged}"
                     />
 
                     <RadioButton 
@@ -69,7 +73,10 @@
                         HorizontalAlignment="Left"
                         Margin="0, 0, 0, 0"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding IsDeviceModeEnabled, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding CurrentDataReadingMode, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:DataReadingModeEnum.USBMode}, 
+                            UpdateSourceTrigger=PropertyChanged}"
                     />
                 </StackPanel>
 
@@ -104,17 +111,21 @@
                         HorizontalAlignment="Left"
                         Margin="50, 0, 75, 0"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding IsFilteringNoneEnabled, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding CurrentFilterType, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.None}, 
+                            UpdateSourceTrigger=PropertyChanged}"
                     />
-                    <!-- maybe it's possible to set the filter type enum with binding !-->
 
                     <RadioButton 
                         Name="FilterSMARadio" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding IsFilteringSMAEnabled, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding CurrentFilterType, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.SMA}, 
+                            UpdateSourceTrigger=PropertyChanged}"
                     />
-                        <!-- maybe it's possible to set the filter type enum with binding !-->
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" >
@@ -146,7 +157,10 @@
                     Foreground="DarkGray"
                     TextAlignment="Center"
                     Name="FilterWindowSizeValueBox"
-                    IsEnabled="{Binding IsFilteringSMAEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding CurrentFilterType, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.SMA}, 
+                            UpdateSourceTrigger=PropertyChanged}"
                     Text="{Binding FilterWindowSize, UpdateSourceTrigger=PropertyChanged}"
                 />
 

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using UWB_Geolocation_Library.SimpleTypes;
 using UWB_Geolocation_Visualizer.Core;
+using UWB_Geolocation_Visualizer.MVVM.Model;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow;
 
@@ -63,6 +65,15 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         [ObservableProperty]
         private bool isLocaliseButtonEnabled = true;
+
+        [ObservableProperty]
+        private DataReadingModeEnum currentDataReadingMode;
+
+        [ObservableProperty]
+        private FilterTypeEnum currentFilterType;
+
+        [ObservableProperty]
+        private string filterWindowSize = string.Empty;
 
         public MainWindowViewModel() : base(displayName: "UWB Geolocation Visualizer")
         {
@@ -127,6 +138,16 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     command.Command = tmp.Command;  //binding the command with new AVM
                     break;
                 }
+            }
+        }
+
+        partial void OnFilterWindowSizeChanged(string value)
+        {
+            RegexValidator previewNumbersOnlyRegexValidator = new RegexValidator("[^0-9]*");
+            string validatedValue = previewNumbersOnlyRegexValidator.Validate(value);
+            if(validatedValue != value)
+            {
+                FilterWindowSize = validatedValue;
             }
         }
     }
