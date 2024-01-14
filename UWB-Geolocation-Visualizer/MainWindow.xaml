@@ -185,14 +185,20 @@
                         HorizontalAlignment="Left"
                         Margin="50, 0, 75, 0"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding IsInputDataLogEnabled, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding CurrentLogMode, 
+                            Converter={StaticResource LogModeEnumToBooleanConverter},
+                            ConverterParameter={x:Static simpleTypes:LogModeEnum.Input},
+                            Mode=TwoWay}"
                     />
-
+                    
                     <CheckBox 
                         Name="LogOutputDataCheckbox" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding IsOutputDataLogEnabled, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding CurrentLogMode,
+                            Converter={StaticResource LogModeEnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:LogModeEnum.Output},
+                            Mode=TwoWay}"
                     />
                 </StackPanel>
 

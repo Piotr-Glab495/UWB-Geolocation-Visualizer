@@ -75,6 +75,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private string filterWindowSize = string.Empty;
 
+        [ObservableProperty]
+        private LogModeEnum currentLogMode = LogModeEnum.None;
+
         public MainWindowViewModel() : base(displayName: "UWB Geolocation Visualizer")
         {
             localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
@@ -148,6 +151,29 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             if(validatedValue != value)
             {
                 FilterWindowSize = validatedValue;
+            }
+        }
+
+        partial void OnCurrentLogModeChanged(LogModeEnum oldValue, LogModeEnum newValue)
+        {
+            //if the unchecking occured service only one to be unchecked
+            if (oldValue == LogModeEnum.Both)
+            {
+                LogModeEnum tmp = LogModeEnum.Both & newValue;
+                CurrentLogMode = tmp;
+                return;
+            }
+            //if the check of the second occured service both to be checked
+            if (oldValue != LogModeEnum.None && newValue > 0 && oldValue > 0)
+            {
+                LogModeEnum tmp = oldValue | newValue;
+                CurrentLogMode = tmp;
+                return;
+            }
+            //if the uncheck of the only one checked occured, service the initial value none
+            if(oldValue != LogModeEnum.None && oldValue != LogModeEnum.Both  && newValue < 0)
+            {
+                CurrentLogMode = LogModeEnum.None;
             }
         }
     }
