@@ -8,21 +8,10 @@ namespace UWB_Geolocation_Library
 {
     public class GeolocationLibraryFacade
     {
-        private readonly IDataReader dataReader;
-        private readonly ILogger? logger;
+        private IDataReader? dataReader;
+        private ILogger? logger;
 
-        public GeolocationLibraryFacade(DataReadingModeEnum mode = DataReadingModeEnum.TestMode, LogModeEnum logMode = LogModeEnum.Input | LogModeEnum.Output)
-        {
-            if(mode == DataReadingModeEnum.USBMode)
-            {
-                dataReader = new USBDataReader("COM3", 9600); //TODO: think about those
-            } 
-            else
-            {
-                dataReader = new InMemoryDataReader();
-            }
-            logger ??= new StreamWriterLogger(logMode);
-        }
+        public GeolocationLibraryFacade() { }
 
         /**
          * <summary>
@@ -35,20 +24,21 @@ namespace UWB_Geolocation_Library
          *  * returning the result.
          * </summary>
          */
-        public PointD Locate(PointD[] anchorsLocations)
+        public PointD Locate(GeolocationLibraryDTO libraryDTO)
         {
             try
             {
-                dataReader.OpenPort();
-                double[] distancesData = dataReader.ReadData() ?? new double[anchorsLocations.Length];
+                SetProperties(libraryDTO);
+                dataReader!.OpenPort();
+                double[] distancesData = dataReader.ReadData() ?? new double[libraryDTO.GetAnchorsLocations().Length];
                 dataReader.ClosePort();
 
                 LogInDataIfNeeded(distancesData);
 
                 LocationCalculatorBuilder locationCalculatorBuilder = (LocationCalculatorBuilder)LocationCalculator
                     .CreateBuilder()    //builder instance only from LocationCalculator static method, because it's impossible to get calculator without builder
-                    .SetInitialData(anchorsLocations, distancesData)
-                    .SetFilteringStrategy(FilterTypeEnum.None, 9);
+                    .SetInitialData(libraryDTO.GetAnchorsLocations(), distancesData)
+                    .SetFilteringStrategy(libraryDTO.GetFilterType(), libraryDTO.GetFilterWindowSize());
 
                 LocationCalculator locationCalculator = locationCalculatorBuilder.Build();
                 PointD calculatedLocation = locationCalculator.CalculateLocation();
@@ -62,6 +52,19 @@ namespace UWB_Geolocation_Library
                 logger?.Dispose();
                 throw;  //providing a message about error for the view after servicing the library work interruption
             }
+        }
+
+        private void SetProperties(GeolocationLibraryDTO libraryDTO)
+        {
+            if (libraryDTO.GetDataReadingMode() == DataReadingModeEnum.USBMode)
+            {
+                dataReader = new USBDataReader("COM3", 9600); //TODO: think about those
+            }
+            else
+            {
+                dataReader = new InMemoryDataReader();
+            }
+            logger ??= new StreamWriterLogger(libraryDTO.GetLogMode());
         }
 
         /**
