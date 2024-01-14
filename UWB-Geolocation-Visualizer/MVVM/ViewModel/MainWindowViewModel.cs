@@ -58,6 +58,12 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         [ObservableProperty]
         private CommandViewModel stopLocateCommand;
 
+        [ObservableProperty]
+        private bool isStopButtonEnabled = false;
+
+        [ObservableProperty]
+        private bool isLocaliseButtonEnabled = true;
+
         public MainWindowViewModel() : base(displayName: "UWB Geolocation Visualizer")
         {
             localizerViewModel = new LocalizerViewModel(displayName: "Lokalizator");
@@ -86,12 +92,12 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
             LocateCommand = new CommandViewModel(
                 displayName: "Lokalizuj",
-                command: new LocateCommand(LocalizerViewModel)
+                command: new LocateCommand(LocalizerViewModel, this)
             );
 
             StopLocateCommand = new CommandViewModel(
                 displayName: "Zatrzymaj lokalizację",
-                command: new StopLocateCommand(LocalizerViewModel)
+                command: new StopLocateCommand(this)
             );
             CurrentView = localizerViewModel;
         }

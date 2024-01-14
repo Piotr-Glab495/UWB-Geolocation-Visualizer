@@ -1,6 +1,6 @@
 ﻿using System.IO.Ports;
 
-namespace UWB_Geolocation_Library.Communication
+namespace UWB_Geolocation_Library.Communication.DataReader
 {
     internal class USBDataReader : IDataReader
     {
@@ -13,7 +13,7 @@ namespace UWB_Geolocation_Library.Communication
 
         public void ClosePort()
         {
-            if(serialPort.IsOpen)
+            if (serialPort.IsOpen)
             {
                 serialPort.Close();
             }

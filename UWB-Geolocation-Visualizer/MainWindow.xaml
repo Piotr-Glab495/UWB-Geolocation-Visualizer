@@ -57,7 +57,7 @@
                     FontSize="15"
                     Cursor="Hand"
                     Background="DarkSlateGray"
-                    IsEnabled="{Binding Path=LocalizerViewModel.IsLocaliseButtonEnabled}"
+                    IsEnabled="{Binding Path=IsLocaliseButtonEnabled}"
                     Command="{Binding LocateCommand.Command}"
                 />
 
@@ -71,7 +71,7 @@
                     FontSize="15"
                     Cursor="Hand"
                     Background="DarkSlateGray"
-                    IsEnabled="{Binding Path=LocalizerViewModel.IsStopButtonEnabled}"
+                    IsEnabled="{Binding Path=IsStopButtonEnabled}"
                     Command="{Binding StopLocateCommand.Command}"
                     />
             </StackPanel>
