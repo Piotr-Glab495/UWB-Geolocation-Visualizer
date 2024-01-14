@@ -1,10 +1,10 @@
-﻿namespace UWB_Geolocation_Library.Communication
+﻿namespace UWB_Geolocation_Library.Communication.DataReader
 {
     internal class InMemoryDataReader : IDataReader
     {
         private bool isOpen = false;
 
-        private static double[] seedData;
+        private static readonly double[] seedData;
 
         static InMemoryDataReader()
         {
@@ -29,13 +29,13 @@
 
         public double[]? ReadData()
         {
-            if(isOpen)
+            if (isOpen)
             {
                 int directionFirst = new Random().Next(0, seedData.Length);
                 int directionSecond = new Random().Next(0, seedData.Length);
-                for(int i = 0; i < seedData.Length; ++i)
+                for (int i = 0; i < seedData.Length; ++i)
                 {
-                    if(i == directionFirst)
+                    if (i == directionFirst)
                     {
                         seedData[i] += new Random().Next(-10, 11);
                     }
@@ -45,7 +45,9 @@
                     }
                 }
                 return seedData;
-            } else { 
+            }
+            else
+            {
                 throw new Exception("Należy najpierw otworzyć port, aby czytać dane!");
             }
         }

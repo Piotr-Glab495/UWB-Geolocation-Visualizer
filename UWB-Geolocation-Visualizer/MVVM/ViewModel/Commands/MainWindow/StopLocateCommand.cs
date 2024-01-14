@@ -4,17 +4,17 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
 {
     public class StopLocateCommand : BaseCommand
     {
-        private readonly LocalizerViewModel localizerViewModel;
+        private readonly MainWindowViewModel mainWindowViewModel;
 
-        public StopLocateCommand(LocalizerViewModel localizerViewModel)
+        public StopLocateCommand(MainWindowViewModel mainWindowViewModel)
         {
-            this.localizerViewModel = localizerViewModel;
+            this.mainWindowViewModel = mainWindowViewModel;
         }
 
         public override void Execute(object? parameter)
         {
-            localizerViewModel.IsStopButtonEnabled = false;
-            localizerViewModel.IsLocaliseButtonEnabled = true;
+            mainWindowViewModel.IsStopButtonEnabled = false;
+            mainWindowViewModel.IsLocaliseButtonEnabled = true;
         }
     }
 }

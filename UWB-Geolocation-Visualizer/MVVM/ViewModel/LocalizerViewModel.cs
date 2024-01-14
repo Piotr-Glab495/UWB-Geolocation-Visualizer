@@ -24,12 +24,6 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         private bool didLocalisePoint = false;
 
-        [ObservableProperty]
-        private bool isStopButtonEnabled = false;
-
-        [ObservableProperty]
-        private bool isLocaliseButtonEnabled = true;
-
         public LocalizerViewModel(string displayName) : base(displayName) 
         {
             BordersSetterViewModel = new BordersSetterViewModel("Podaj granice obszaru lokalizacji", OnSetBorders);

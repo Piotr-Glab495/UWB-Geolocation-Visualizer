@@ -10,24 +10,26 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
     public class LocateCommand : BaseCommand
     {
         private readonly LocalizerViewModel localizerViewModel;
+        private readonly MainWindowViewModel mainWindowViewModel;
         private readonly GeolocationLibraryFacade libraryFacade;
 
-        public LocateCommand(LocalizerViewModel localizerViewModel)
+        public LocateCommand(LocalizerViewModel localizerViewModel, MainWindowViewModel mainWindowViewModel)
         {
             this.localizerViewModel = localizerViewModel;
+            this.mainWindowViewModel = mainWindowViewModel;
             libraryFacade = new GeolocationLibraryFacade();
         }
 
         public override void Execute(object? parameter)
         {
-            localizerViewModel.IsLocaliseButtonEnabled = false;
-            localizerViewModel.IsStopButtonEnabled = true;
+            mainWindowViewModel.IsLocaliseButtonEnabled = false;
+            mainWindowViewModel.IsStopButtonEnabled = true;
             Dispatcher d = Dispatcher.CurrentDispatcher;
             _ = Task.Run(() =>
             {
                 try
                 {
-                    while(localizerViewModel.IsStopButtonEnabled)
+                    while(mainWindowViewModel.IsStopButtonEnabled)
                     {
                         PointD localisedPoint = libraryFacade.Locate(localizerViewModel.AnchorsToPointDArray());
                         d.Invoke(() => {
@@ -37,11 +39,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
                 } 
                 catch (Exception ex)
                 {
-                    libraryFacade.ClosePort();
                     d.Invoke(() => {
                         LocalizerViewModel.LocatingError(ex.Message);
-                        localizerViewModel.IsStopButtonEnabled = false;
-                        localizerViewModel.IsLocaliseButtonEnabled = true;
+                        mainWindowViewModel.IsStopButtonEnabled = false;
+                        mainWindowViewModel.IsLocaliseButtonEnabled = true;
                     });
                 } 
                 
