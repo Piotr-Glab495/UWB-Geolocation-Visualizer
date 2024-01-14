@@ -1,7 +1,13 @@
-﻿using UWB_Geolocation_Library.SimpleTypes;
+﻿using System.Diagnostics;
+using UWB_Geolocation_Library.SimpleTypes;
 
 namespace UWB_Geolocation_Library.Communication.DataLogger
 {
+    /**
+     * <summary>
+     *  This is the class only for debugging the data during development. Not for release mode.
+     * </summary>
+     */
     internal class ConsoleLogger : ILogger
     {
         private readonly LogModeEnum currentLogMode;
@@ -14,17 +20,23 @@ namespace UWB_Geolocation_Library.Communication.DataLogger
 
         public void Dispose()
         {
-            Console.WriteLine("Disposed properly...");
+            Debug.WriteLine("Library console logger disposed properly...");
         }
 
         public void LogInData(string line)
         {
-            Console.WriteLine("Input data: " + line);
+            if (currentLogMode.HasFlag(LogModeEnum.Input))
+            {
+                Debug.WriteLine("Input data: " + line);
+            }
         }
 
         public void LogOutData(string line)
         {
-            Console.WriteLine("Output data: " + line);
+            if (currentLogMode.HasFlag(LogModeEnum.Output))
+            {
+                Debug.WriteLine("Output data: " + line);
+            }
         }
     }
 }

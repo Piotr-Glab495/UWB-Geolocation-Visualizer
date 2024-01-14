@@ -4,7 +4,7 @@
     {
         private bool isOpen = false;
 
-        private static readonly double[] seedData; //the f for real readonly???
+        private static readonly double[] seedData;
 
         static InMemoryDataReader()
         {
