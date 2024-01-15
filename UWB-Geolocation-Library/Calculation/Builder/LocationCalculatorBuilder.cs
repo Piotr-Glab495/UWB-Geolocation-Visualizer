@@ -53,8 +53,6 @@ namespace UWB_Geolocation_Library.Calculation.Builder
             return this;
         }
 
-        //TODO: maybe develop for SetIsMultiThread, SetThreadNumber, setTestMode if it wouldn't be async for testing
-
         public LocationCalculator Build()
         {
             return calculator!;

@@ -4,7 +4,7 @@ namespace UWB_Geolocation_Library.Communication.DataLogger
 {
     internal interface ILogger
     {
-        LogModeEnum CurrentLogMode { get; }
+        LogModeEnum CurrentLogMode { get; set; }
         void LogInData(string line);
         void LogOutData(string line);
         void Dispose();

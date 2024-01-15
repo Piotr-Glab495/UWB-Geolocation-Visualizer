@@ -64,6 +64,14 @@ namespace UWB_Geolocation_Library
             {
                 dataReader = new InMemoryDataReader();
             }
+            if(logger == null)
+            {
+                logger = new StreamWriterLogger(libraryDTO.GetLogMode());
+            }
+            else
+            {
+                logger.CurrentLogMode = libraryDTO.GetLogMode();
+            }
             logger ??= new StreamWriterLogger(libraryDTO.GetLogMode());
         }
 
