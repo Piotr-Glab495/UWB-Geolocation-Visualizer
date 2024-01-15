@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:UWB_Geolocation_Visualizer.MVVM.ViewModel"
+        xmlns:simpleTypes="clr-namespace:UWB_Geolocation_Library.SimpleTypes;assembly=UWB-Geolocation-Library"
         mc:Ignorable="d"
         Height="675" Width="920"
         WindowStyle="None"
@@ -46,7 +47,178 @@
                     x:Name="CommandsControl"
                     ItemsSource="{Binding Commands, UpdateSourceTrigger=PropertyChanged}"
                     ItemTemplate="{StaticResource CommandsTemplate}"
+                />
+
+                <TextBlock
+                    Text="Tryb działania programu:"
+                    Foreground="White"
+                    FontSize="16"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10" />
+
+                <StackPanel Orientation="Horizontal" >
+                    <RadioButton 
+                        Name="TestModeRadio"
+                        HorizontalAlignment="Left"
+                        Margin="50, 0, 75, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding CurrentDataReadingMode, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:DataReadingModeEnum.TestMode}, 
+                            UpdateSourceTrigger=PropertyChanged}"
                     />
+
+                    <RadioButton 
+                        Name="DeviceModeRadio" 
+                        HorizontalAlignment="Left"
+                        Margin="0, 0, 0, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding CurrentDataReadingMode, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:DataReadingModeEnum.USBMode}, 
+                            UpdateSourceTrigger=PropertyChanged}"
+                    />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock 
+                        Text="Testowy"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="28, 0, 20, 20"
+                    />
+
+                    <TextBlock 
+                        Text="Z urządzeniem"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,20"
+                    />
+                </StackPanel>
+
+                <TextBlock
+                    Text="Filtrowanie:"
+                    Foreground="White"
+                    FontSize="16"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10" />
+
+                <StackPanel Orientation="Horizontal" >
+                    <RadioButton 
+                        Name="FilterNoneRadio"
+                        HorizontalAlignment="Left"
+                        Margin="50, 0, 75, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding CurrentFilterType, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.None}, 
+                            UpdateSourceTrigger=PropertyChanged}"
+                    />
+
+                    <RadioButton 
+                        Name="FilterSMARadio" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding CurrentFilterType, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.SMA}, 
+                            UpdateSourceTrigger=PropertyChanged}"
+                    />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock 
+                        Text="Brak"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="43, 0, 60, 10"
+                    />
+
+                    <TextBlock 
+                        Text="SMA"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,10"
+                    />
+                </StackPanel>
+
+                <TextBox
+                    HorizontalAlignment="Center"
+                    Background="#353340"
+                    Width="160"
+                    VerticalAlignment="Top"
+                    Height="20"
+                    FontSize="15"
+                    Margin="0, 0, 0, 5"
+                    Foreground="DarkGray"
+                    TextAlignment="Center"
+                    Name="FilterWindowSizeValueBox"
+                    IsEnabled="{Binding CurrentFilterType, 
+                            Converter={StaticResource EnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.SMA}, 
+                            UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding FilterWindowSize, UpdateSourceTrigger=PropertyChanged}"
+                />
+
+                <TextBlock 
+                    Text="Szerokość okna filtru"
+                    Foreground="White"
+                    FontSize="15"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20"
+                />
+
+                <TextBlock
+                    Text="Logowanie danych:"
+                    Foreground="White"
+                    FontSize="16"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10" />
+
+                <StackPanel Orientation="Horizontal" >
+                    <CheckBox 
+                        Name="LogInputDataCheckbox"
+                        HorizontalAlignment="Left"
+                        Margin="50, 0, 75, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding CurrentLogMode, 
+                            Converter={StaticResource LogModeEnumToBooleanConverter},
+                            ConverterParameter={x:Static simpleTypes:LogModeEnum.Input},
+                            Mode=TwoWay}"
+                    />
+                    
+                    <CheckBox 
+                        Name="LogOutputDataCheckbox" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding CurrentLogMode,
+                            Converter={StaticResource LogModeEnumToBooleanConverter}, 
+                            ConverterParameter={x:Static simpleTypes:LogModeEnum.Output},
+                            Mode=TwoWay}"
+                    />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock 
+                        Text="Wejściowych"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="15, 0, 10, 10"
+                    />
+
+                    <TextBlock 
+                        Text="Wyjściowych"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,10"
+                    />
+                </StackPanel>
 
                 <Button
                     Content="{Binding LocateCommand.DisplayName}"

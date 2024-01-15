@@ -4,13 +4,17 @@ namespace UWB_Geolocation_Library.Calculation.Filters
 {
     internal class SimpleMovingAverageFilter : IFilterStrategy
     {
-        private readonly List<PointD> locationsBuffer;
+        private static readonly List<PointD> locationsBuffer;
         private int windowSize = 0;
+
+        static SimpleMovingAverageFilter()
+        {
+            locationsBuffer = new List<PointD>();
+        }
 
         public SimpleMovingAverageFilter(int windowSize)
         {
             this.windowSize = windowSize;
-            locationsBuffer = new List<PointD>();
         }
 
         public void SetWindowSize(int windowSize)

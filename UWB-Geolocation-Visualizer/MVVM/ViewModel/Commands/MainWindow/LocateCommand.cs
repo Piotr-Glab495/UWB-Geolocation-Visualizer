@@ -31,7 +31,14 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
                 {
                     while(mainWindowViewModel.IsStopButtonEnabled)
                     {
-                        PointD localisedPoint = libraryFacade.Locate(localizerViewModel.AnchorsToPointDArray());
+                        GeolocationLibraryDTO libraryDTO = new(
+                            localizerViewModel.AnchorsToPointDArray(),
+                            mainWindowViewModel.CurrentDataReadingMode,
+                            mainWindowViewModel.CurrentLogMode,
+                            mainWindowViewModel.CurrentFilterType,
+                            int.Parse(mainWindowViewModel.FilterWindowSize)
+                        );
+                        PointD localisedPoint = libraryFacade.Locate(libraryDTO);
                         d.Invoke(() => {
                             localizerViewModel.UpsertLocalisedAnchor(localisedPoint);
                         });
