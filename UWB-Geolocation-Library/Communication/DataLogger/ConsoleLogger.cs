@@ -10,8 +10,8 @@ namespace UWB_Geolocation_Library.Communication.DataLogger
      */
     internal class ConsoleLogger : ILogger
     {
-        private readonly LogModeEnum currentLogMode;
-        public LogModeEnum CurrentLogMode => currentLogMode;
+        private LogModeEnum currentLogMode;
+        public LogModeEnum CurrentLogMode { get => currentLogMode; set => currentLogMode = value; }
 
         public ConsoleLogger(LogModeEnum logMode)
         {

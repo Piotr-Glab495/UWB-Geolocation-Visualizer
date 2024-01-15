@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using UWB_Geolocation_Library.SimpleTypes;
 using UWB_Geolocation_Visualizer.Core;
+using UWB_Geolocation_Visualizer.MVVM.Model;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands;
 using UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow;
 
@@ -63,6 +65,18 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         [ObservableProperty]
         private bool isLocaliseButtonEnabled = true;
+
+        [ObservableProperty]
+        private DataReadingModeEnum currentDataReadingMode;
+
+        [ObservableProperty]
+        private FilterTypeEnum currentFilterType;
+
+        [ObservableProperty]
+        private string filterWindowSize = string.Empty;
+
+        [ObservableProperty]
+        private LogModeEnum currentLogMode = LogModeEnum.None;
 
         public MainWindowViewModel() : base(displayName: "UWB Geolocation Visualizer")
         {
@@ -127,6 +141,39 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     command.Command = tmp.Command;  //binding the command with new AVM
                     break;
                 }
+            }
+        }
+
+        partial void OnFilterWindowSizeChanged(string value)
+        {
+            RegexValidator previewNumbersOnlyRegexValidator = new RegexValidator("[^0-9]*");
+            string validatedValue = previewNumbersOnlyRegexValidator.Validate(value);
+            if(validatedValue != value)
+            {
+                FilterWindowSize = validatedValue;
+            }
+        }
+
+        partial void OnCurrentLogModeChanged(LogModeEnum oldValue, LogModeEnum newValue)
+        {
+            //if the unchecking occured service only one to be unchecked
+            if (oldValue == LogModeEnum.Both)
+            {
+                LogModeEnum tmp = LogModeEnum.Both & newValue;
+                CurrentLogMode = tmp;
+                return;
+            }
+            //if the check of the second occured service both to be checked
+            if (oldValue != LogModeEnum.None && newValue > 0 && oldValue > 0)
+            {
+                LogModeEnum tmp = oldValue | newValue;
+                CurrentLogMode = tmp;
+                return;
+            }
+            //if the uncheck of the only one checked occured, service the initial value none
+            if(oldValue != LogModeEnum.None && oldValue != LogModeEnum.Both  && newValue < 0)
+            {
+                CurrentLogMode = LogModeEnum.None;
             }
         }
     }

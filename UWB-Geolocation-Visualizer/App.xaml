@@ -31,6 +31,10 @@
             </DataTemplate>
 
             <model:MultiParameterBorderConverter x:Key="MultiParameterBorderConverter" />
+
+            <model:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+
+            <model:LogModeEnumToBooleanConverter x:Key="LogModeEnumToBooleanConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

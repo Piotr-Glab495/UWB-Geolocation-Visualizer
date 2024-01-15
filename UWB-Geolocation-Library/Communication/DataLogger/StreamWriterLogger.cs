@@ -6,11 +6,11 @@ namespace UWB_Geolocation_Library.Communication.DataLogger
     {
         private StreamWriter? inStreamWriter;
         private StreamWriter? outStreamWriter;
-        private readonly LogModeEnum currentLogMode;
+        private LogModeEnum currentLogMode;
         private readonly string IN_PATH = Path.Combine(GetLogsDirectory(), "InData.txt");
         private readonly string OUT_PATH = Path.Combine(GetLogsDirectory(), "OutData.txt");
 
-        public LogModeEnum CurrentLogMode => currentLogMode;
+        public LogModeEnum CurrentLogMode { get => currentLogMode; set => currentLogMode = value; }
 
         public StreamWriterLogger(LogModeEnum logMode)
         {
