@@ -9,7 +9,7 @@
              d:DataContext="{d:DesignInstance Type=viewModel:LocalizerViewModel}"
              Background="#22202F">
     <Grid>
-        <Image x:Name="image" Height="100" Width="Auto" Source="http://thecybershadow.net/misc/stackoverflow.png"/>
+        <!--<Image x:Name="image" Height="100" Width="Auto" Source="http://thecybershadow.net/misc/stackoverflow.png"/>-->
         <ItemsControl
             Name="LocalizerMapItemsControl"
             ItemsSource="{Binding Anchors}"

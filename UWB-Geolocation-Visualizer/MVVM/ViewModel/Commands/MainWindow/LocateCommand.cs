@@ -43,6 +43,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
                             localizerViewModel.UpsertLocalisedAnchor(localisedPoint);
                         });
                     }
+
+                    libraryFacade.ClosePort();
+                    libraryFacade.DisposeLogger();
                 } 
                 catch (Exception ex)
                 {

@@ -73,7 +73,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private FilterTypeEnum currentFilterType;
 
         [ObservableProperty]
-        private string filterWindowSize = string.Empty;
+        private string filterWindowSize = "0";
 
         [ObservableProperty]
         private LogModeEnum currentLogMode = LogModeEnum.None;
@@ -156,21 +156,21 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         partial void OnCurrentLogModeChanged(LogModeEnum oldValue, LogModeEnum newValue)
         {
-            //if the unchecking occured service only one to be unchecked
+            //if the unchecking occured when both where checked, then service only one to be unchecked
             if (oldValue == LogModeEnum.Both)
             {
                 LogModeEnum tmp = LogModeEnum.Both & newValue;
                 CurrentLogMode = tmp;
                 return;
             }
-            //if the check of the second occured service both to be checked
+            //if the check of the second occured when when one was checked already, then service both to be checked
             if (oldValue != LogModeEnum.None && newValue > 0 && oldValue > 0)
             {
                 LogModeEnum tmp = oldValue | newValue;
                 CurrentLogMode = tmp;
                 return;
             }
-            //if the uncheck of the only one checked occured, service the initial value none
+            //if the uncheck of the only one checked occured, then service the initial value none setting
             if(oldValue != LogModeEnum.None && oldValue != LogModeEnum.Both  && newValue < 0)
             {
                 CurrentLogMode = LogModeEnum.None;

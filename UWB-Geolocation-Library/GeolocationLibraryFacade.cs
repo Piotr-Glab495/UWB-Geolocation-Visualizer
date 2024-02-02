@@ -58,7 +58,7 @@ namespace UWB_Geolocation_Library
         {
             if (libraryDTO.GetDataReadingMode() == DataReadingModeEnum.USBMode)
             {
-                dataReader = new USBDataReader("COM3", 9600); //TODO: think about those
+                dataReader = new USBDataReader("COM9", 115200);
             }
             else
             {
@@ -100,6 +100,16 @@ namespace UWB_Geolocation_Library
             logger!.LogOutData(
                 "X: " + calculatedLocation.X  + " Y: " + calculatedLocation.Y
             );
+        }
+
+        public void ClosePort()
+        {
+            dataReader?.ClosePort();
+        }
+
+        public void DisposeLogger()
+        {
+            logger?.Dispose();
         }
     }
 }

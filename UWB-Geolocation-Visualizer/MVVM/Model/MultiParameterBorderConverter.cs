@@ -15,11 +15,11 @@ namespace UWB_Geolocation_Visualizer.MVVM.Model
             if ((string)parameter == "X")
             {
                 worldSize = vm!.Width;
-                if(!double.TryParse(vm!.BordersSetterViewModel.XBorderMinViewModel.Location, out borderMin))
+                if(!double.TryParse(vm!.BordersSetterViewModel.XBorderMinViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out borderMin))
                 {
                     borderMin = 0.0;
                 }
-                if(!double.TryParse(vm!.BordersSetterViewModel.XBorderMaxViewModel.Location, out borderMax))
+                if(!double.TryParse(vm!.BordersSetterViewModel.XBorderMaxViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out borderMax))
                 {
                     borderMax = borderMin;
                 }
@@ -27,11 +27,11 @@ namespace UWB_Geolocation_Visualizer.MVVM.Model
             else
             {
                 worldSize = vm!.Height;
-                if (!double.TryParse(vm!.BordersSetterViewModel.YBorderMinViewModel.Location, out borderMin))
+                if (!double.TryParse(vm!.BordersSetterViewModel.YBorderMinViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out borderMin))
                 {
                     borderMin = 0.0;
                 }
-                if (!double.TryParse(vm!.BordersSetterViewModel.YBorderMaxViewModel.Location, out borderMax))
+                if (!double.TryParse(vm!.BordersSetterViewModel.YBorderMaxViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out borderMax))
                 {
                     borderMax = borderMin;
                 }
