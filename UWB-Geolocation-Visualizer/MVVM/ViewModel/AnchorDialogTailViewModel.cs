@@ -9,14 +9,14 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
     {
         private readonly IDictionary<string, string> pointsDictionary = new Dictionary<string, string>
         {
-            { "Left", "7, -7.5 40, -25 40, 10"},
-            { "Top", "7, -7.5 -10, -41.5 25, -41.5"},
-            { "Right", "7, -7.5 -26, -25 -26, 10"},
-            { "Bottom", "7, -7.5 -10, 26.5 25, 26.5"},
-            { "LeftTop", "7, -7.5 7.5, 26.5 42.5, 26.5"},
-            { "RightTop", "7, -7.5 -27.5, 26.5 7.5, 26.5"},
-            { "LeftBottom", "7, -7.5 7.5, -46 42.5, -41.5"},
-            { "RightBottom", "7, -7.5 -27.5, -41.5 7.5, -41.5"},
+            { "Left", "0.5, 0 32.5, -17.5 32.5, 17.5"},
+            { "Top", "0, 0 -17, -35 17, -35"},
+            { "Right", "0, 0 -26, -17.5 -26, 17.5"},
+            { "Bottom", "0, 0 -17, 19 18, 19"},
+            { "LeftTop", "-0.5, 0 0, 26.5 35, 26.5"},
+            { "RightTop", "0, 0 -27.5, 19 0, 25"},
+            { "LeftBottom", "0, 0 0, -46 35, -35"},
+            { "RightBottom", "0, 0 -27.5, -35 0, -41.5"},
         }; 
 
         [ObservableProperty]
