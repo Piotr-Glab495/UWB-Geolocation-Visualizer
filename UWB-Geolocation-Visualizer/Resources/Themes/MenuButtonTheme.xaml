@@ -13,6 +13,7 @@
 
                             <TextBlock Text="{TemplateBinding Property=Content}"
                                        VerticalAlignment="Center"
+                                       TextWrapping="Wrap"
                                        Margin="15,10,0,0"
                                        Height="50"
                                        Foreground="White"
