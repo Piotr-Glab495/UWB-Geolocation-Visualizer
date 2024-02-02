@@ -99,6 +99,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                         command: new ToggleDialogVisibilityCommand(LocalizerViewModel.BordersSetterViewModel)
                     ),
                 new CommandViewModel(
+                        displayName: "Wybierz tło obszaru lokalizacji",
+                        command: new ChooseFileCommand(LocalizerViewModel)
+                    ),
+                new CommandViewModel(
                         displayName: "Zakończ",
                         command: new CloseCommand( () => { System.Windows.Application.Current.Shutdown(); } )
                     )
