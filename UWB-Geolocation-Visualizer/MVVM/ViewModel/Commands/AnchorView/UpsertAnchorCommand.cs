@@ -16,7 +16,6 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.AnchorView
             localizerViewModel.UpsertAnchor(anchorViewModel);
             RequestUpsertAnchor?.Invoke();
 
-            //TODO: -= only one delegate meaning the MainWindowViewModel.ReallocateAnchorViewModel() method because the rest is needed for eddition too
             foreach (Delegate d in RequestUpsertAnchor!.GetInvocationList())
             {
                 RequestUpsertAnchor -= (Action)d;
