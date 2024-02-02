@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using UWB_Geolocation_Library.SimpleTypes;
 using UWB_Geolocation_Visualizer.Core;
 
@@ -21,6 +22,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
 
         [ObservableProperty]
         private BordersSetterViewModel bordersSetterViewModel;
+
+        [ObservableProperty]
+        private BitmapImage? localizerBgSource = null;
 
         private bool didLocalisePoint = false;
 
