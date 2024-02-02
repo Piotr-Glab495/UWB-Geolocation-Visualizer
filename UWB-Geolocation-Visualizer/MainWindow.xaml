@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:UWB_Geolocation_Visualizer.MVVM.ViewModel"
         xmlns:simpleTypes="clr-namespace:UWB_Geolocation_Library.SimpleTypes;assembly=UWB-Geolocation-Library"
         mc:Ignorable="d"
-        Height="675" Width="920"
+        Height="800" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -286,7 +286,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Panel.ZIndex="1000"
-/>
+            />
 
         </Grid>
     </Border>

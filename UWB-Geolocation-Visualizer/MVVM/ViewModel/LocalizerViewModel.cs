@@ -14,10 +14,10 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private ObservableCollection<AnchorViewModel> anchors = new();
 
         [ObservableProperty]
-        private int width = 720;
+        private int width = 800;
 
         [ObservableProperty]
-        private int height = 600;
+        private int height = 725;
 
         [ObservableProperty]
         private BordersSetterViewModel bordersSetterViewModel;
@@ -98,7 +98,6 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
             }
         }
 
-        //TODO: Add a messenger and use it to react to the SourceUpdated event with this method
         /**
          * <summary>
          * Method parsing the coordinates locations to double precision numbers, optionally updating their values if they made no sense and calculating 
@@ -148,23 +147,33 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private void AdjustDialogSite(AnchorViewModel anchorViewModel, double x, double y)
         {
             //getting back to world (px) not map (OXY) coordinates
-            double borderXMin = double.Parse(BordersSetterViewModel.XBorderMinViewModel.Location);
-            double borderYMin = double.Parse(BordersSetterViewModel.YBorderMinViewModel.Location);
-            double borderXMax = double.Parse(BordersSetterViewModel.XBorderMaxViewModel.Location);
-            double borderYMax = double.Parse(BordersSetterViewModel.YBorderMaxViewModel.Location);
+            double.TryParse(BordersSetterViewModel.XBorderMinViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out double borderXMin);
+            double.TryParse(BordersSetterViewModel.YBorderMinViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out double borderYMin);
+            double.TryParse(BordersSetterViewModel.XBorderMaxViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out double borderXMax);
+            double.TryParse(BordersSetterViewModel.YBorderMaxViewModel.Location, NumberStyles.Float, CultureInfo.InvariantCulture, out double borderYMax);
             x -= borderXMin;
             y -= borderYMin;
 
+            double xMaxCompareValue = 0.5 * anchorViewModel.Width;
+            double yMaxCompareValue = 0.5 * anchorViewModel.Height;
             //calculating dialog site
-            if (x <= 0.5 * anchorViewModel.Width)
+            if (borderXMax <= xMaxCompareValue)
             {
-                if (y <= 0.5 * anchorViewModel.Height)
+                xMaxCompareValue =  0.5 * borderXMax;
+            }
+            if (borderYMax <= yMaxCompareValue)
+            {
+                yMaxCompareValue = 0.5 * borderYMax;
+            }
+            if (x <= xMaxCompareValue)
+            {
+                if (y <= yMaxCompareValue)
                 {
                     anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.LeftBottomCorner;
                     return;
                 }
 
-                if (y >= (borderYMax - 0.5 * anchorViewModel.Height))
+                if (y >= (borderYMax - yMaxCompareValue))
                 {
                     anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.LeftTopCorner;
                     return;
@@ -174,15 +183,15 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 return;
             }
 
-            if (x >= (borderXMax - 0.5 * anchorViewModel.Width))
+            if (x >= (borderXMax - xMaxCompareValue))
             {
-                if (y <= 0.5 * anchorViewModel.Height)
+                if (y <= yMaxCompareValue)
                 {
                     anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.RightBottomCorner;
                     return;
                 }
 
-                if (y >= (borderYMax - 0.5 * anchorViewModel.Height))
+                if (y >= (borderYMax - yMaxCompareValue))
                 {
                     anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.RightTopCorner;
                     return;
@@ -192,13 +201,13 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                 return;
             }
 
-            if (y <= 0.5 * anchorViewModel.Height)
+            if (y <= yMaxCompareValue)
             {
                 anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Top;
                 return;
             }
 
-            if (y >= (borderYMax - 0.5 * anchorViewModel.Height))
+            if (y >= (borderYMax - yMaxCompareValue))
             {
                 anchorViewModel.AnchorDialogViewModel.DialogSite = Enums.TailSitesEnum.Bottom;
                 return;

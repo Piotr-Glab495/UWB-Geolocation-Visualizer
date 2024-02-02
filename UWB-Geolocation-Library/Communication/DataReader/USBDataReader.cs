@@ -1,4 +1,5 @@
-﻿using System.IO.Ports;
+﻿using System.Globalization;
+using System.IO.Ports;
 
 namespace UWB_Geolocation_Library.Communication.DataReader
 {
@@ -28,11 +29,14 @@ namespace UWB_Geolocation_Library.Communication.DataReader
         {
             if (serialPort.IsOpen)
             {
-                int bytesRead = serialPort.BaseStream.Read(new byte[1024], 0, 1024);    //TODO: check the vector size
+                int bytesRead = serialPort.BaseStream.Read(new byte[40], 0, 40);
                 if (bytesRead > 0)
                 {
-                    string data = serialPort.ReadExisting();
-                    double[] distances = ParseData(data);
+                    string line;
+                    do { 
+                        line = serialPort.ReadLine();
+                    } while (!line.StartsWith("p_A1"));
+                    double[] distances = ParseData(line);
                     return distances;
                 }
                 return null;
@@ -50,20 +54,20 @@ namespace UWB_Geolocation_Library.Communication.DataReader
          */
         private static double[] ParseData(string data)
         {
-            string[] tokens = data.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            string[] tokens = data.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             double[] distances = new double[tokens.Length];
 
             for (int i = 0; i < tokens.Length; ++i)
             {
                 string[] subTokens = tokens[i].Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-                if (double.TryParse(subTokens[i], out double distance))
+                if (double.TryParse(subTokens[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double distance))
                 {
                     distances[i] = distance;
                 }
                 else
                 {
-                    throw new Exception("Błąd parsowania danych " + subTokens[i] + " na typ double ");
+                    throw new Exception("Błąd parsowania danych " + subTokens[1] + " na typ double ");
                 }
             }
 
