@@ -3,6 +3,7 @@
     internal class InMemoryDataReader : IDataReader
     {
         private bool isOpen = false;
+        private static bool isFirstIteration;
 
         private static readonly double[] seedData;
 
@@ -15,6 +16,7 @@
                 100d,
                 100d
             };
+            isFirstIteration = true;
         }
 
         public void ClosePort()
@@ -31,6 +33,11 @@
         {
             if (isOpen)
             {
+                if(isFirstIteration)
+                {
+                    isFirstIteration = false;
+                    return seedData;
+                }
                 int directionFirst = new Random().Next(0, seedData.Length);
                 int directionSecond = new Random().Next(0, seedData.Length);
                 for (int i = 0; i < seedData.Length; ++i)

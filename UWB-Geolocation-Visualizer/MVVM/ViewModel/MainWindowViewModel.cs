@@ -70,6 +70,9 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
         private DataReadingModeEnum currentDataReadingMode;
 
         [ObservableProperty]
+        private string portComNumber = "0";
+
+        [ObservableProperty]
         private FilterTypeEnum currentFilterType;
 
         [ObservableProperty]
@@ -145,6 +148,16 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel
                     command.Command = tmp.Command;  //binding the command with new AVM
                     break;
                 }
+            }
+        }
+
+        partial void OnPortComNumberChanged(string value)
+        {
+            RegexValidator previewNumbersOnlyRegexValidator = new RegexValidator("[^0-9]*");
+            string validatedValue = previewNumbersOnlyRegexValidator.Validate(value);
+            if (validatedValue != value)
+            {
+                PortComNumber = validatedValue;
             }
         }
 

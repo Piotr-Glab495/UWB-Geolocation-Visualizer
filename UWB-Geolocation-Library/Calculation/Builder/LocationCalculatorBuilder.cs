@@ -32,6 +32,10 @@ namespace UWB_Geolocation_Library.Calculation.Builder
                     calculator!.FilteringStrategy = new SimpleMovingAverageFilter(filterWidth);
                     calculator!.IsUsingFilter = true;
                     return this;
+                case FilterTypeEnum.SMM:
+                    calculator!.FilteringStrategy = new SimpleMovingMedianFilter(filterWidth);
+                    calculator!.IsUsingFilter = true;
+                    return this;
             }
         }
 

@@ -98,6 +98,32 @@
                     />
                 </StackPanel>
 
+                <TextBox
+                    HorizontalAlignment="Center"
+                    Background="#353340"
+                    Width="160"
+                    VerticalAlignment="Top"
+                    Height="20"
+                    FontSize="15"
+                    Margin="0, 0, 0, 5"
+                    Foreground="DarkGray"
+                    TextAlignment="Center"
+                    Name="ComPortValueBox"
+                    IsEnabled="{Binding CurrentDataReadingMode, 
+                        Converter={StaticResource EnumToBooleanConverter}, 
+                        ConverterParameter={x:Static simpleTypes:DataReadingModeEnum.USBMode}, 
+                        UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding PortComNumber, UpdateSourceTrigger=PropertyChanged}"
+                />
+
+                <TextBlock 
+                    Text="Numer portu COM"
+                    Foreground="White"
+                    FontSize="15"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20"
+                />
+
                 <TextBlock
                     Text="Filtrowanie:"
                     Foreground="White"
@@ -109,7 +135,7 @@
                     <RadioButton 
                         Name="FilterNoneRadio"
                         HorizontalAlignment="Left"
-                        Margin="50, 0, 75, 0"
+                        Margin="40, 0, 40, 0"
                         VerticalAlignment="Center"
                         IsChecked="{Binding CurrentFilterType, 
                             Converter={StaticResource EnumToBooleanConverter}, 
@@ -126,6 +152,17 @@
                             ConverterParameter={x:Static simpleTypes:FilterTypeEnum.SMA}, 
                             UpdateSourceTrigger=PropertyChanged}"
                     />
+
+                    <RadioButton 
+                        Name="FilterSMMRadio"
+                        HorizontalAlignment="Left"
+                        Margin="40, 0, 0, 0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding CurrentFilterType, 
+                        Converter={StaticResource EnumToBooleanConverter}, 
+                        ConverterParameter={x:Static simpleTypes:FilterTypeEnum.SMM}, 
+                        UpdateSourceTrigger=PropertyChanged}"
+                    />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" >
@@ -134,7 +171,7 @@
                         Foreground="White"
                         FontSize="15"
                         HorizontalAlignment="Center"
-                        Margin="43, 0, 60, 10"
+                        Margin="30, 0, 25, 10"
                     />
 
                     <TextBlock 
@@ -143,6 +180,14 @@
                         FontSize="15"
                         HorizontalAlignment="Center"
                         Margin="0,0,0,10"
+                    />
+
+                    <TextBlock 
+                        Text="SMM"
+                        Foreground="White"
+                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Margin="27,0,0,10"
                     />
                 </StackPanel>
 
@@ -158,8 +203,8 @@
                     TextAlignment="Center"
                     Name="FilterWindowSizeValueBox"
                     IsEnabled="{Binding CurrentFilterType, 
-                            Converter={StaticResource EnumToBooleanConverter}, 
-                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.SMA}, 
+                            Converter={StaticResource EnumToBooleanConverterReverted}, 
+                            ConverterParameter={x:Static simpleTypes:FilterTypeEnum.None}, 
                             UpdateSourceTrigger=PropertyChanged}"
                     Text="{Binding FilterWindowSize, UpdateSourceTrigger=PropertyChanged}"
                 />

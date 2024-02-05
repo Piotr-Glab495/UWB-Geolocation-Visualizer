@@ -7,7 +7,7 @@ using UWB_Geolocation_Visualizer.Core;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
 {
-    public class LocateCommand : BaseCommand
+    public class LocateCommand : CommandBase
     {
         private readonly LocalizerViewModel localizerViewModel;
         private readonly MainWindowViewModel mainWindowViewModel;
@@ -34,6 +34,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
                         GeolocationLibraryDTO libraryDTO = new(
                             localizerViewModel.AnchorsToPointDArray(),
                             mainWindowViewModel.CurrentDataReadingMode,
+                            int.Parse(mainWindowViewModel.PortComNumber),
                             mainWindowViewModel.CurrentLogMode,
                             mainWindowViewModel.CurrentFilterType,
                             int.Parse(mainWindowViewModel.FilterWindowSize)
