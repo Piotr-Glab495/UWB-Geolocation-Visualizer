@@ -2,7 +2,7 @@
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
 {
-    public class StopLocateCommand : BaseCommand
+    public class StopLocateCommand : CommandBase
     {
         private readonly MainWindowViewModel mainWindowViewModel;
 

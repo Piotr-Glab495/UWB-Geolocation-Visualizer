@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace UWB_Geolocation_Visualizer.Core
 {
-    public abstract class BaseCommand : ICommand
+    public abstract class CommandBase : ICommand
     {
         public event EventHandler? CanExecuteChanged = delegate { };
 

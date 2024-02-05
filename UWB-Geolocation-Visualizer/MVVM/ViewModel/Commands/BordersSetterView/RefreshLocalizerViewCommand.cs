@@ -3,7 +3,7 @@ using UWB_Geolocation_Visualizer.Core;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.BordersSetterView
 {
-    class RefreshLocalizerViewCommand : BaseCommand
+    class RefreshLocalizerViewCommand : CommandBase
     {
         private readonly BordersSetterViewModel model;
 

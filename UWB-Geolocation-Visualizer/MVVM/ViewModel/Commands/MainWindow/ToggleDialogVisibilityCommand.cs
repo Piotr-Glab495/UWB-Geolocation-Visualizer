@@ -2,7 +2,7 @@
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
 {
-    public class ToggleDialogVisibilityCommand : BaseCommand
+    public class ToggleDialogVisibilityCommand : CommandBase
     {
         private readonly DialogViewModel dialogViewModel;
         
