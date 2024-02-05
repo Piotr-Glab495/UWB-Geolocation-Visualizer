@@ -33,6 +33,8 @@
             <model:MultiParameterBorderConverter x:Key="MultiParameterBorderConverter" />
 
             <model:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+            
+            <model:EnumToBooleanConverterReverted x:Key="EnumToBooleanConverterReverted" />
 
             <model:LogModeEnumToBooleanConverter x:Key="LogModeEnumToBooleanConverter" />
         </ResourceDictionary>

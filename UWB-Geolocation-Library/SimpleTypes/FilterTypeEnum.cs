@@ -3,6 +3,7 @@
     public enum FilterTypeEnum
     {
         None = 0,
-        SMA = 1
+        SMA = 1,
+        SMM = 2
     }
 }

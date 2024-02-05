@@ -3,7 +3,7 @@ using UWB_Geolocation_Visualizer.Core;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.AnchorView
 {
-    public class UpsertAnchorCommand : BaseCommand
+    public class UpsertAnchorCommand : CommandBase
     {
         public event Action RequestUpsertAnchor = delegate { };
 

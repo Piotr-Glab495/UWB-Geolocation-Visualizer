@@ -5,7 +5,7 @@ using UWB_Geolocation_Visualizer.Core;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
 {
-    public class ChooseFileCommand : BaseCommand
+    public class ChooseFileCommand : CommandBase
     {
         private LocalizerViewModel localizerViewModel;
 

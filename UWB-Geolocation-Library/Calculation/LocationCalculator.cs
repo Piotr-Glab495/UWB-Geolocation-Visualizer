@@ -69,7 +69,7 @@ namespace UWB_Geolocation_Library.Calculation
          * <summary>
          * This method finds the most suitable point to judge as a real location.
          * It minimizes the difference between real and estimated distances from each anchor to an estimated point got from Nelder-Mead method using least squares method implementation.
-         * Simpler: it's an estimation point distances vs real distances => the difference between those least => got a real location. 
+         * Simpler: it's an estimation point distances vs real distances => if the difference between those is the least then we got a real location. 
          * </summary> 
          */
         public PointD CalculateLocation()

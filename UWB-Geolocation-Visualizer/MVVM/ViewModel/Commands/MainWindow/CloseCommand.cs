@@ -3,7 +3,7 @@ using UWB_Geolocation_Visualizer.Core;
 
 namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.MainWindow
 {
-    public class CloseCommand : BaseCommand
+    public class CloseCommand : CommandBase
     {
         public event Action RequestClose;
 

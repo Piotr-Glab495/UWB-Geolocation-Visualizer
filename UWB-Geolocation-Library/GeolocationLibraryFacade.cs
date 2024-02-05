@@ -58,7 +58,7 @@ namespace UWB_Geolocation_Library
         {
             if (libraryDTO.GetDataReadingMode() == DataReadingModeEnum.USBMode)
             {
-                dataReader = new USBDataReader("COM9", 115200);
+                dataReader = new USBDataReader("COM" + libraryDTO.GetPortComNumber().ToString(), 115200);
             }
             else
             {
