@@ -8,7 +8,7 @@ namespace UWB_Geolocation_Visualizer.MVVM.ViewModel.Commands.BordersSetterView
         private readonly BordersSetterViewModel model;
 
         public event Action RequestRefreshLocalizerView;
-        //todo: check because the border x max didn't change for a point last time...
+
         public override void Execute(object? parameter)
         {
             if (!double.TryParse(model.XBorderMinViewModel.Location, out double borderXMin))
